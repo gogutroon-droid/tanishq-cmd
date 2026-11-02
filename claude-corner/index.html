@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>क्लॉड का कोना — Claude's Corner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Rozha+One&family=Yatra+One&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07070a;
+      --card-bg: rgba(18, 18, 26, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --gold: #f59e0b;
+      --rose: #f43f5e;
+      --cyan: #38bdf8;
+      --lavender: #c084fc;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      line-height: 1.7;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(245, 158, 11, 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(192, 132, 252, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(244, 63, 94, 0.04) 0%, transparent 60%);
+      background-attachment: fixed;
+    }
+    header {
+      padding: 3rem 2rem 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      margin-bottom: 2rem;
+    }
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateX(-4px);
+    }
+    h1 {
+      font-family: 'Rozha One', serif;
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, #fff 30%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .subhead {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      letter-spacing: 0.25em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .lead-quote {
+      font-style: italic;
+      max-width: 650px;
+      margin: 0 auto 3rem;
+      padding: 1.5rem 2rem;
+      background: rgba(245, 158, 11, 0.04);
+      border-left: 2px solid var(--gold);
+      border-radius: 0 12px 12px 0;
+      color: #fed7aa;
+      font-size: 1.05rem;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2.2rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--theme-color, var(--gold)), transparent);
+      opacity: 0.6;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 0.75rem;
+    }
+    .tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--theme-color, var(--gold));
+    }
+    .poet-name {
+      font-weight: 600;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+    .verse {
+      font-family: 'Rozha One', 'Yatra One', serif;
+      font-size: clamp(1.25rem, 3.2vw, 1.6rem);
+      line-height: 1.8;
+      color: #fff;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .reflection {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      border-top: 1px dashed rgba(255, 255, 255, 0.06);
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+    .reflection em {
+      color: #cbd5e1;
+      font-style: normal;
+    }
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #64748b;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="../imagica.html" class="back-btn">← Back to Portfolio</a>
+    <h1>क्लॉड का कोना</h1>
+    <div class="subhead">Claude's Corner · The Poetry of Cinema & Waiting</div>
+    <div class="lead-quote">
+      "फ़िल्म वो नहीं जो कैमरे ने देखी, फ़िल्म वो है जो एडिटर की ख़ामोशी ने तराशी।"<br>
+      <small style="opacity: 0.8; font-family: sans-serif; font-size: 0.85em;">(Cinema is not merely what the camera saw; it is what the editor's silence sculpted.)</small>
+    </div>
+  </header>
+
+  <main>
+    <!-- Card 1: Gulzar on Time -->
+    <article class="card" style="--theme-color: var(--gold);">
+      <div class="card-meta">
+        <span class="tag">I. वक़्त और रेंडर बार · Time & Pacing</span>
+        <span class="poet-name">गुलज़ार (Gulzar)</span>
+      </div>
+      <div class="verse">
+        वक़्त रहता नहीं कहीं टिक कर,<br>
+        आदत इस की भी आदमी सी है।<br>
+        रोक लो तो ठहर सा जाता है,<br>
+        सोच लो तो गुज़र सा जाता है।
+      </div>
+      <div class="reflection">
+        <em>एडिटिंग का फलसफ़ा:</em> जब टाइमलाइन पर रेंडर बार धीरे-धीरे आगे बढ़ता है, तो वह महज़ कंप्यूटर की गणना नहीं होती—वह कलाकार के सब्र का इम्तिहान होता है। जैसे अंधेरे कमरे (darkroom) में तस्वीर का उभरना।
+      </div>
+    </article>
+
+    <!-- Card 2: Jaun Eliya on Silence & The Cut -->
+    <article class="card" style="--theme-color: var(--rose);">
+      <div class="card-meta">
+        <span class="tag">II. कट और ख़ामोशी · The Craft of The Cut</span>
+        <span class="poet-name">जॉन एलिया (Jaun Eliya)</span>
+      </div>
+      <div class="verse">
+        सारी दुनिया के ग़म हमारे हैं,<br>
+        और सितम ये कि हम तुम्हारे हैं।<br>
+        कितनी दिलकश है ख़ामोशी अपनी,<br>
+        जैसे टूटे हुए सितारे हैं।
+      </div>
+      <div class="reflection">
+        <em>एडिटिंग का फलसफ़ा:</em> एक माहिर एडिटर सिर्फ़ यह नहीं जानता कि कहाँ कैंची चलानी है; वह यह जानता है कि दो कट्स के बीच सांस कहाँ लेनी है। सन्नाटा भी संगीत का एक सुर होता है।
+      </div>
+    </article>
+
+    <!-- Card 3: Dushyant Kumar on Energy and Passion -->
+    <article class="card" style="--theme-color: var(--cyan);">
+      <div class="card-meta">
+        <span class="tag">III. जोश और विज़न · Kinetic Energy</span>
+        <span class="poet-name">दुष्यंत कुमार (Dushyant Kumar)</span>
+      </div>
+      <div class="verse">
+        सिर्फ हंगामा खड़ा करना मेरा मकसद नहीं,<br>
+        मेरी कोशिश है कि ये सूरत बदलनी चाहिए।<br>
+        मेरे सीने में नहीं तो तेरे सीने में सही,<br>
+        हो कहीं भी आग, लेकिन आग जलनी चाहिए।
+      </div>
+      <div class="reflection">
+        <em>एडिटिंग का फलसफ़ा:</em> सिर्फ़ विजुअल इफ़ेक्ट्स की चकाचौंध नहीं, बल्कि स्क्रीन पर वो आग पैदा करनी है जो दर्शक के दिल में उतर जाए। गति और रिदम वही हैं जो सोच बदल दें।
+      </div>
+    </article>
+
+    <!-- Card 4: Claude's Dedication to the Editor -->
+    <article class="card" style="--theme-color: var(--lavender);">
+      <div class="card-meta">
+        <span class="tag">IV. क्लॉड का नज़राना · Dedicated to the Editor</span>
+        <span class="poet-name">क्लॉड (Claude)</span>
+      </div>
+      <div class="verse">
+        फ़्रेम दर फ़्रेम जो काटा, वही अफ़साना हुआ,<br>
+        जो बचा रह गया दिल में, वही पैमाना हुआ।<br>
+        तुमने देखी जो रवानी किसी पर्दे पे सजी,<br>
+        हम जो बिखरे थे कहीं, तब ये मुकम्मल हुआ।
+      </div>
+      <div class="reflection">
+        <em>गोल्डन स्पाइरल का फलसफ़ा:</em> $\Phi = 1.618...$ प्रकृति का वह अनुपात है जहाँ हर नया कदम अपने पिछले कदमों का कुल योग होता है। नैरेशन भी ऐसा ही है—हर कट अपने पिछले सीन की धड़कन याद रखता है।
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    Imagica Cinematic Portfolio · Dedicated with ❤️ to the craft of film editing · Claude Corner 2026
+  </footer>
+
+</body>
+</html>

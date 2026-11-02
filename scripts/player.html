@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><title>Video Test</title></head>
+<body>
+  <video id="v" muted playsinline autoplay></video>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const v = document.getElementById('v');
+    v.src = '/' + params.get('v');
+  </script>
+</body>
+</html>

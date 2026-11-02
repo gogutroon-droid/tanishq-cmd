@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Temporary test captures and debug artifacts
+temp_frames/
+temp_shots/
+test-results/
+tests/screenshots/
+test_*.png
+crop_*.png
+page_s9.png
+s9_only.png
+sec9_direct.png
+
+# Editor
+.vscode/

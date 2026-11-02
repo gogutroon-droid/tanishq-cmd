@@ -1,0 +1,346 @@
+[
+  {
+    "video": "videos/1st.mov",
+    "name": "1st.mov",
+    "duration": 33.514667,
+    "avgColor": {
+      "r": 73,
+      "g": 69,
+      "b": 69
+    },
+    "dominantTop": [
+      {
+        "r": 96,
+        "g": 96,
+        "b": 96,
+        "weight": 3432
+      },
+      {
+        "r": 48,
+        "g": 48,
+        "b": 48,
+        "weight": 2379
+      },
+      {
+        "r": 72,
+        "g": 72,
+        "b": 72,
+        "weight": 2109
+      },
+      {
+        "r": 24,
+        "g": 24,
+        "b": 24,
+        "weight": 1704
+      },
+      {
+        "r": 96,
+        "g": 96,
+        "b": 120,
+        "weight": 649
+      }
+    ],
+    "thumb": "thumbnails/1st.jpg"
+  },
+  {
+    "video": "videos/2nd.mov",
+    "name": "2nd.mov",
+    "duration": 39.68,
+    "avgColor": {
+      "r": 58,
+      "g": 127,
+      "b": 88
+    },
+    "dominantTop": [
+      {
+        "r": 72,
+        "g": 144,
+        "b": 96,
+        "weight": 2011
+      },
+      {
+        "r": 72,
+        "g": 144,
+        "b": 120,
+        "weight": 1219
+      },
+      {
+        "r": 48,
+        "g": 144,
+        "b": 96,
+        "weight": 1204
+      },
+      {
+        "r": 48,
+        "g": 120,
+        "b": 72,
+        "weight": 876
+      },
+      {
+        "r": 48,
+        "g": 144,
+        "b": 120,
+        "weight": 743
+      }
+    ],
+    "thumb": "thumbnails/2nd.jpg"
+  },
+  {
+    "video": "videos/3rd.mov",
+    "name": "3rd.mov",
+    "duration": 5.013333,
+    "avgColor": {
+      "r": 157,
+      "g": 151,
+      "b": 142
+    },
+    "dominantTop": [
+      {
+        "r": 240,
+        "g": 240,
+        "b": 240,
+        "weight": 1738
+      },
+      {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "weight": 1184
+      },
+      {
+        "r": 240,
+        "g": 240,
+        "b": 264,
+        "weight": 1090
+      },
+      {
+        "r": 240,
+        "g": 216,
+        "b": 168,
+        "weight": 1081
+      },
+      {
+        "r": 240,
+        "g": 240,
+        "b": 168,
+        "weight": 730
+      }
+    ],
+    "thumb": "thumbnails/3rd.jpg"
+  },
+  {
+    "video": "videos/4th.mov",
+    "name": "4th.mov",
+    "duration": 7.424,
+    "avgColor": {
+      "r": 130,
+      "g": 129,
+      "b": 146
+    },
+    "dominantTop": [
+      {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "weight": 2316
+      },
+      {
+        "r": 240,
+        "g": 240,
+        "b": 240,
+        "weight": 1816
+      },
+      {
+        "r": 240,
+        "g": 240,
+        "b": 264,
+        "weight": 1183
+      },
+      {
+        "r": 240,
+        "g": 264,
+        "b": 264,
+        "weight": 888
+      },
+      {
+        "r": 240,
+        "g": 216,
+        "b": 240,
+        "weight": 806
+      }
+    ],
+    "thumb": "thumbnails/4th.jpg"
+  },
+  {
+    "video": "videos/5th.mov",
+    "name": "5th.mov",
+    "duration": 30.976,
+    "avgColor": {
+      "r": 206,
+      "g": 203,
+      "b": 195
+    },
+    "dominantTop": [
+      {
+        "r": 216,
+        "g": 216,
+        "b": 216,
+        "weight": 7044
+      },
+      {
+        "r": 216,
+        "g": 216,
+        "b": 192,
+        "weight": 2321
+      },
+      {
+        "r": 240,
+        "g": 240,
+        "b": 240,
+        "weight": 1324
+      },
+      {
+        "r": 240,
+        "g": 216,
+        "b": 216,
+        "weight": 741
+      },
+      {
+        "r": 240,
+        "g": 240,
+        "b": 216,
+        "weight": 648
+      }
+    ],
+    "thumb": "thumbnails/5th.jpg"
+  },
+  {
+    "video": "videos/6th.mov",
+    "name": "6th.mov",
+    "duration": 24.384,
+    "avgColor": {
+      "r": 171,
+      "g": 132,
+      "b": 134
+    },
+    "dominantTop": [
+      {
+        "r": 216,
+        "g": 216,
+        "b": 216,
+        "weight": 6481
+      },
+      {
+        "r": 24,
+        "g": 0,
+        "b": 0,
+        "weight": 902
+      },
+      {
+        "r": 48,
+        "g": 0,
+        "b": 0,
+        "weight": 619
+      },
+      {
+        "r": 240,
+        "g": 240,
+        "b": 240,
+        "weight": 558
+      },
+      {
+        "r": 72,
+        "g": 0,
+        "b": 0,
+        "weight": 477
+      }
+    ],
+    "thumb": "thumbnails/6th.jpg"
+  },
+  {
+    "video": "videos/7th.mov",
+    "name": "7th.mov",
+    "duration": 11.882667,
+    "avgColor": {
+      "r": 230,
+      "g": 208,
+      "b": 133
+    },
+    "dominantTop": [
+      {
+        "r": 264,
+        "g": 264,
+        "b": 264,
+        "weight": 6724
+      },
+      {
+        "r": 264,
+        "g": 192,
+        "b": 0,
+        "weight": 4825
+      },
+      {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "weight": 1242
+      },
+      {
+        "r": 264,
+        "g": 192,
+        "b": 24,
+        "weight": 429
+      },
+      {
+        "r": 264,
+        "g": 216,
+        "b": 48,
+        "weight": 175
+      }
+    ],
+    "thumb": "thumbnails/7th.jpg"
+  },
+  {
+    "video": "videos/8th.mov",
+    "name": "8th.mov",
+    "duration": 18.474667,
+    "avgColor": {
+      "r": 218,
+      "g": 221,
+      "b": 224
+    },
+    "dominantTop": [
+      {
+        "r": 264,
+        "g": 264,
+        "b": 264,
+        "weight": 10941
+      },
+      {
+        "r": 96,
+        "g": 96,
+        "b": 96,
+        "weight": 1455
+      },
+      {
+        "r": 0,
+        "g": 96,
+        "b": 240,
+        "weight": 799
+      },
+      {
+        "r": 264,
+        "g": 144,
+        "b": 24,
+        "weight": 485
+      },
+      {
+        "r": 240,
+        "g": 240,
+        "b": 240,
+        "weight": 157
+      }
+    ],
+    "thumb": "thumbnails/8th.jpg"
+  }
+]

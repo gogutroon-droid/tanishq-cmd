@@ -1,0 +1,4223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>imagica — Tanishq Rana · Video Editing &amp; Cinematic Direction</title>
+<meta name="description" content="Cinematic video editing and motion direction portfolio crafted in the authentic golden ratio spiral design language of narrowdesign.com.">
+<link rel="icon" type="image/png" href="thumbnails/1st.jpg" sizes="32x32">
+
+<!-- Typography: High-Fashion Clean Grotesque, Monospace & Editorial Serif -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   NARROWDESIGN REVERSE-ENGINEERED DESIGN SYSTEM & MATHEMATICAL CONSTANTS
+   Light Editorial Palette · Thin Black Generative Linework · Breathable Negative Space
+   ========================================================================== */
+:root {
+  --phi: 1.6180339887;
+  --aspect: 0.6180339887;
+  --axis: 0.7237;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-disp: "Cormorant Garamond", Georgia, serif;
+
+  --theme-bg: #F9F8F5;
+  --theme-fg: #111112;
+  --theme-accent: #111112;
+  --theme-line: rgba(0, 0, 0, 0.12);
+  --ambient-video-glow: rgba(0, 0, 0, 0.12);
+  --ambient-video-spread: rgba(0, 0, 0, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--theme-bg);
+  color: var(--theme-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 0.65s cubic-bezier(0.16, 1, 0.3, 1), color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Subtle micro-fine banknote guilloché watermark in thin black lines */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cpath d='M0 80 Q 40 40, 80 80 T 160 80 M0 40 Q 40 0, 80 40 T 160 40 M0 120 Q 40 80, 80 120 T 160 120' fill='none' stroke='%23000000' stroke-width='0.75'/%3E%3Ccircle cx='80' cy='80' r='60' fill='none' stroke='%23000000' stroke-width='0.55' stroke-dasharray='3,5'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* Background Canvas for real-time generative moiré arcs in thin black lines */
+#canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Golden Spiral Stage Container */
+#stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 10;
+}
+
+#world, .js-spiral {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  will-change: transform, filter;
+  transform-style: flat;
+  backface-visibility: hidden;
+  transition: filter 0.08s ease-out;
+}
+
+/* --------------------------------------------------------------------------
+   THE GOLDEN SQUARE (.js-section)
+   Identical base dimensions: width = _winW * 0.618033, height = _winW * 0.618033
+   Spacious Editorial Breathing Room & Thin Contour Framing
+   -------------------------------------------------------------------------- */
+.js-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  will-change: transform, border-radius;
+  backface-visibility: hidden;
+  transition: background-color 0.65s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.3s ease, border-color 0.3s ease;
+  padding: 0;
+}
+
+.js-section:not(.active):hover {
+  border-radius: 3%;
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Thin Abstract Linework SVG Background in Black */
+.sec-abstract-pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.55;
+  transition: opacity 0.4s ease;
+}
+
+.js-section.active .sec-abstract-pattern {
+  opacity: 0.85;
+}
+
+/* Subtle inner spiral guide arc */
+.js-arc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Unified Vertical Flex Layout Container for Project Slides */
+.sec-content {
+  position: absolute;
+  top: clamp(48px, 5.5vh, 60px);
+  left: clamp(24px, 4vw, 56px);
+  right: clamp(24px, 4vw, 56px);
+  bottom: auto;
+  height: min(calc(100% - 90px), calc(100vh - 128px));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Top Row: Monogram / Year & Editorial Narrative with Generous Breathing Space */
+.sec-top {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: clamp(14px, 2vw, 28px);
+  pointer-events: auto;
+  flex-shrink: 0;
+}
+
+.js-client-logo {
+  width: clamp(34px, 4vw, 56px);
+  height: auto;
+  flex-shrink: 0;
+}
+
+.sec-narrative-box {
+  max-width: clamp(280px, 42vw, 440px);
+  font-size: clamp(11.5px, 0.95vw, 14px);
+  line-height: 1.55;
+  opacity: 0.88;
+  text-align: left;
+}
+
+.sec-narrative-box a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  transition: opacity 0.2s;
+}
+
+.sec-narrative-box a:hover {
+  opacity: 0.6;
+}
+
+.sec-video-wrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(40vh, calc(100vh - 425px), 360px);
+  margin: auto auto;
+  align-self: center;
+  box-sizing: border-box;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #000000;
+  box-shadow: 0 16px 44px var(--ambient-video-glow, rgba(0, 0, 0, 0.12)), 0 0 80px var(--ambient-video-spread, rgba(0, 0, 0, 0.04));
+  cursor: pointer;
+  pointer-events: auto;
+  transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+  flex-shrink: 0;
+}
+
+@media (min-height: 800px) {
+  .sec-video-wrap {
+    max-height: min(44vh, calc(100vh - 410px), 440px);
+  }
+}
+
+@media (min-height: 900px) {
+  .sec-video-wrap {
+    max-height: min(46vh, calc(100vh - 400px), 520px);
+  }
+}
+
+@media (min-height: 1000px) {
+  .sec-video-wrap {
+    max-height: min(48vh, calc(100vh - 400px), 560px);
+  }
+}
+
+.sec-video-wrap:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.16);
+}
+
+.sec-inline-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sec-video-wrap:hover .sec-inline-video {
+  transform: scale(1.025);
+}
+
+.sec-video-badges {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.sec-audio-btn {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #111112;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background 0.2s, transform 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.sec-audio-btn:hover {
+  background: #111112;
+  color: #ffffff;
+  transform: scale(1.04);
+}
+
+.sec-audio-btn.is-unmuted {
+  background: #111112;
+  color: #ffffff;
+  border-color: #111112;
+}
+
+.sec-video-badge {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #111112;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.sec-video-badge:hover {
+  background: #ffffff;
+  transform: scale(1.04);
+}
+
+.sec-video-play-icon {
+  font-size: 9px;
+  color: #0284c7;
+}
+
+/* Bottom Row: Title + Credits & Vertical CTA Pill */
+.sec-bot {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: clamp(12px, 2vw, 24px);
+  pointer-events: auto;
+  flex-shrink: 0;
+}
+
+.sec-title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 65%;
+}
+
+.js-play-trigger {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 0.8vw, 12px);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 3px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.js-play-trigger:hover {
+  opacity: 0.65;
+  transform: translateX(2px);
+}
+
+.js-section-title {
+  font-size: clamp(24px, 3.1vw, 42px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+}
+
+.sec-metadata {
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 0.75vw, 12px);
+  line-height: 1.6;
+  opacity: 0.75;
+  letter-spacing: 0.04em;
+}
+
+.sec-metadata span {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   THE NARROWDESIGN VERTICAL CTA PILL (.js-project-cta)
+   -------------------------------------------------------------------------- */
+.js-project-cta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.js-project-cover {
+  width: 0;
+  height: clamp(66px, 6.4vw, 92px);
+  overflow: hidden;
+  border-radius: 4px;
+  margin-right: 12px;
+  opacity: 0;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.js-project-cover img {
+  width: clamp(120px, 12vw, 180px);
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.js-section.active .js-project-cta:hover .js-project-cover {
+  width: clamp(120px, 12vw, 180px);
+  opacity: 1;
+}
+
+.js-view-icon {
+  width: clamp(52px, 4.4vw, 64px);
+  height: clamp(82px, 6.8vw, 100px);
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: transparent;
+  transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.js-section.active .js-project-cta:hover .js-view-icon {
+  transform: scale(1.05);
+}
+
+.js-eye-svg {
+  width: 32px;
+  height: 32px;
+  display: none;
+}
+
+.js-section.active .js-eye-svg {
+  display: block;
+}
+
+.js-view-text {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  display: none;
+}
+
+.js-section.active .js-view-text {
+  display: block;
+}
+
+.js-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.js-section.active .js-arrow {
+  display: none;
+}
+
+.js-arrow svg {
+  width: 14px;
+  height: 48px;
+}
+
+/* Home Slide Pill */
+.js-scroll-pill {
+  width: clamp(52px, 4.4vw, 64px);
+  height: clamp(82px, 6.8vw, 100px);
+  border-radius: 999px;
+  background: #111112;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.js-scroll-pill:hover {
+  transform: scale(1.06);
+}
+
+.js-scroll-pill svg {
+  width: 24px;
+  height: 38px;
+}
+
+.js-scroll-text {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   DEDICATED HOME / COVER SLIDE STYLING (Slide 01 / 10)
+   Spacious, breathable, minimal editorial architecture
+   -------------------------------------------------------------------------- */
+.home-container {
+  position: absolute;
+  top: clamp(48px, 5.5vh, 60px);
+  left: clamp(24px, 4vw, 56px);
+  right: clamp(24px, 4vw, 56px);
+  bottom: auto;
+  height: min(calc(100% - 90px), calc(100vh - 128px));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  z-index: 4;
+}
+
+.home-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.home-mono-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.home-center-stage {
+  max-width: 680px;
+}
+
+.home-eyebrow {
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 0.9vw, 13px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.home-title {
+  font-size: clamp(38px, 5.2vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  margin-bottom: 24px;
+}
+
+.home-desc {
+  font-size: clamp(14px, 1.25vw, 17px);
+  line-height: 1.68;
+  opacity: 0.85;
+  max-width: 520px;
+}
+
+.home-bot-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.home-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+/* --------------------------------------------------------------------------
+   DEDICATED ABOUT ME SLIDE STYLING (Slide 09 / 10 · Profile & Philosophy)
+   Tactile Video Editor Workspace, Typographic Contrast & Motion Identity
+   -------------------------------------------------------------------------- */
+.about-container {
+  position: absolute;
+  top: clamp(36px, 4.5vh, 52px);
+  left: clamp(24px, 3.5vw, 54px);
+  right: clamp(24px, 3.5vw, 54px);
+  bottom: clamp(24px, 3.5vh, 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  z-index: 4;
+  pointer-events: auto;
+}
+
+.about-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: clamp(12px, 1.8vh, 24px);
+}
+
+.about-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.68;
+}
+
+/* Two-Column Grid: Left (Typography, Bio, Timeline, Reel) | Right (Collage, Toolkit, Capsule) */
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.28fr) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 44px);
+  align-items: center;
+  flex: 1;
+}
+
+.about-left-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-headline-wrap {
+  max-width: 520px;
+}
+
+.about-headline {
+  font-family: var(--font-disp);
+  font-size: clamp(24px, 2.5vw, 38px);
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -0.015em;
+  color: var(--theme-fg);
+  margin-bottom: 14px;
+}
+
+/* Hand-Drawn Scribble Highlight around "heartbeat." */
+.scribble-word {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.scribble-svg {
+  position: absolute;
+  left: -10%;
+  top: -24%;
+  width: 120%;
+  height: 155%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 1;
+}
+
+/* Technical Inspector Bounding Box around "architecture of emotion." */
+.bbox-word {
+  position: relative;
+  display: inline-block;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+.bbox-frame {
+  position: absolute;
+  inset: -2px -4px;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+
+.bbox-frame::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 3px;
+  width: 100%;
+  height: 0.75px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* 8 Bounding Box Anchor Resize Handles */
+.bbox-h, .card-h {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #ffffff;
+  border: 1px solid #111112;
+  box-sizing: border-box;
+}
+
+.h-tl { top: -3px; left: -3px; }
+.h-tc { top: -3px; left: calc(50% - 2.5px); }
+.h-tr { top: -3px; right: -3px; }
+.h-mr { top: calc(50% - 2.5px); right: -3px; }
+.h-br { bottom: -3px; right: -3px; }
+.h-bc { bottom: -3px; left: calc(50% - 2.5px); }
+.h-bl { bottom: -3px; left: -3px; }
+.h-ml { top: calc(50% - 2.5px); left: -3px; }
+
+/* Scribble Arrow Pointing to Bounding Box */
+.bbox-arrow-svg {
+  position: absolute;
+  right: -58px;
+  bottom: -18px;
+  width: 62px;
+  height: 44px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.about-bio {
+  font-family: var(--font-sans);
+  font-size: clamp(12px, 0.95vw, 14.5px);
+  line-height: 1.62;
+  opacity: 0.88;
+  max-width: 480px;
+}
+
+/* ==========================================================================
+   VIDEO EDITOR TIMELINE & FLOATING "PLAY REEL" WORKSPACE
+   ========================================================================== */
+.editor-workspace-wrap {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-top: clamp(16px, 2.2vh, 26px);
+}
+
+/* Mini NLE Timeline Strip */
+.nle-timeline-strip {
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 6px;
+  padding: 8px 12px;
+  width: 250px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+}
+
+.nle-scrubber-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+  margin-bottom: 6px;
+}
+
+.nle-filmstrip-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.nle-frame {
+  width: 66px;
+  height: 40px;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #000;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.nle-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.waveform-frame {
+  background: #0d0f12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.waveform-bars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 24px;
+}
+
+.waveform-bars span {
+  width: 2px;
+  background: #34d399;
+  border-radius: 1px;
+  animation: waveBarBounce 1.4s ease-in-out infinite alternate;
+}
+
+.waveform-bars span:nth-child(2n) { animation-delay: 0.2s; height: 18px; }
+.waveform-bars span:nth-child(3n) { animation-delay: 0.4s; height: 22px; }
+.waveform-bars span:nth-child(4n) { animation-delay: 0.1s; height: 14px; }
+.waveform-bars span:nth-child(5n) { animation-delay: 0.3s; height: 24px; }
+
+@keyframes waveBarBounce {
+  0% { transform: scaleY(0.3); opacity: 0.6; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+.nle-tracks-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nle-transport-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.nle-track-lane {
+  position: relative;
+  height: 16px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.audio-lane {
+  flex: 1;
+  background: #d4d4d8;
+  display: flex;
+  align-items: center;
+}
+
+.audio-wave-line {
+  width: 100%;
+  height: 8px;
+  background: repeating-linear-gradient(90deg, #71717a 0px, #71717a 1px, transparent 1px, transparent 3px);
+  opacity: 0.8;
+}
+
+.razor-cuts span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: #ffffff;
+  box-shadow: 0 0 2px rgba(0,0,0,0.4);
+}
+
+.video-lane {
+  width: 100%;
+  margin-top: 5px;
+  background: #bbf7d0;
+  border: 1px solid #86efac;
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: #166534;
+  font-weight: 600;
+}
+
+.video-lane-cut-icon {
+  font-size: 10px;
+  margin-right: 4px;
+}
+
+.video-lane-cuts span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: #166534;
+  opacity: 0.4;
+}
+
+/* Floating Vintage "Play Reel" Monitor Frame */
+.vintage-monitor-wrap {
+  position: relative;
+  width: clamp(210px, 19vw, 260px);
+  cursor: pointer;
+  z-index: 5;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.vintage-monitor-wrap:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.monitor-hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  opacity: 0.85;
+}
+
+.vintage-monitor-screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9.8;
+  background: #0a0a0c;
+  border: 1px solid #1a1a1f;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
+}
+
+.monitor-bg-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.65;
+  filter: contrast(1.15) brightness(0.9);
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.vintage-monitor-wrap:hover .monitor-bg-poster {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+/* CRT Scanlines Overlay */
+.monitor-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 3px, 6px 100%;
+  opacity: 0.6;
+}
+
+.monitor-rec-row {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  color: #ffffff;
+  z-index: 2;
+}
+
+.monitor-rec-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+  animation: recDotBlink 1.2s infinite;
+}
+
+@keyframes recDotBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.85); }
+}
+
+.monitor-frosted-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, background 0.25s ease;
+  z-index: 2;
+}
+
+.vintage-monitor-wrap:hover .monitor-frosted-play {
+  transform: translate(-50%, -50%) scale(1.12);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.monitor-frosted-play svg {
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+}
+
+.monitor-hud-bot {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: #ffffff;
+  z-index: 2;
+}
+
+.monitor-title {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.monitor-frame-ct {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  opacity: 0.7;
+}
+
+/* Viewport Corner Brackets */
+.vp-bracket {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.vp-tl { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+.vp-tr { top: 4px; right: 4px; border-left: none; border-bottom: none; }
+.vp-bl { bottom: 4px; left: 4px; border-right: none; border-top: none; }
+.vp-br { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+
+/* ==========================================================================
+   RIGHT COLUMN: TECHNICAL INSPECTOR CARD, FILM COLLAGE & CAPSULE
+   ========================================================================== */
+.about-right-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Polaroids & Film Stills with Darkroom Organic Vibe */
+.film-collage-top, .film-collage-bot {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+}
+
+.polaroid-frame {
+  position: relative;
+  background: #ffffff;
+  padding: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+}
+
+.polaroid-frame img {
+  width: 58px;
+  height: 40px;
+  object-fit: cover;
+  display: block;
+  filter: contrast(1.1) brightness(0.95);
+}
+
+.p-1 { transform: rotate(-3deg); }
+.p-2 { transform: rotate(2deg); margin-top: -6px; }
+.p-3 { transform: rotate(2deg); }
+.p-4 { transform: rotate(-4deg); margin-top: -4px; }
+
+.collage-arrow-1, .collage-arrow-2 {
+  width: 48px;
+  height: 34px;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* Technical Inspector Card (Core Toolkit & Capabilities) */
+.toolkit-inspector-card {
+  position: relative;
+  width: 100%;
+  max-width: 390px;
+  background: rgba(252, 250, 246, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.42);
+  padding: 16px 20px;
+  box-sizing: border-box;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+}
+
+.inspector-section {
+  position: relative;
+}
+
+.inspector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: var(--theme-fg);
+}
+
+.inspector-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.8;
+}
+
+.inspector-list {
+  font-family: var(--font-mono);
+  font-size: clamp(10.5px, 0.82vw, 11.5px);
+  line-height: 1.68;
+  opacity: 0.88;
+}
+
+.inspector-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 12px 0;
+}
+
+/* Capsule HELLO Button */
+.capsule-hello-pill {
+  position: absolute;
+  right: 12px;
+  bottom: -22px;
+  width: 38px;
+  height: 72px;
+  border: 1.5px solid #111112;
+  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, color 0.2s;
+  z-index: 6;
+}
+
+.capsule-hello-pill:hover {
+  transform: translateY(-4px) scale(1.06);
+  background: #111112;
+  color: #ffffff;
+}
+
+.capsule-arrow-up {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.capsule-hello-text {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+
+/* Bottom Bar: Inquiries and Title */
+.about-bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: clamp(8px, 1.2vh, 16px);
+}
+
+.about-inquiries-box {
+  font-family: var(--font-mono);
+  font-size: clamp(10.5px, 0.85vw, 12px);
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.inquiries-email {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  transition: opacity 0.2s;
+}
+
+.inquiries-email:hover {
+  opacity: 0.65;
+}
+
+.inquiries-role {
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   DEDICATED REFERENCE-ACCURATE "HOLA." CONTACT SLIDE (Slide 10 / 10)
+   SMPTE Test-Pattern Strip, Glitch Chromatic Aberration & Interactive Hub
+   -------------------------------------------------------------------------- */
+.contact-container {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 4;
+  pointer-events: auto;
+}
+
+/* Screen Left Seam: Vintage SMPTE Video Test-Pattern Strip */
+.smpte-test-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: auto;
+  width: 100%;
+  height: 38px;
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid rgba(0, 0, 0, 0.18);
+  border-right: none;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.smpte-bar {
+  height: 100%;
+  flex: 1;
+}
+
+.b-white { background: #e5e5e5; }
+.b-yellow { background: #eab308; }
+.b-cyan { background: #06b6d4; }
+.b-green { background: #22c55e; }
+.b-magenta { background: #d946ef; }
+.b-red { background: #ef4444; }
+.b-blue { background: #3b82f6; }
+
+.smpte-checkerboard {
+  width: 54px;
+  height: 100%;
+  background-image: linear-gradient(45deg, #000 25%, transparent 25%), linear-gradient(-45deg, #000 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #000 75%), linear-gradient(-45deg, transparent 75%, #000 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  background-color: #ffffff;
+  opacity: 0.75;
+}
+
+.smpte-gradient {
+  width: 44px;
+  height: 100%;
+  background: linear-gradient(to right, #ffffff, #000000);
+}
+
+.smpte-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 0, 0, 0.25) 2px, rgba(0, 0, 0, 0.25) 4px);
+  pointer-events: none;
+}
+
+/* Contact Typography Tower Stage: HOLALO, HOLA, CONTACT */
+.contact-tower-stage {
+  position: absolute;
+  bottom: 50px;
+  left: 36px;
+  right: 36px;
+  top: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.tower-col {
+  transform: rotate(180deg);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tower-col-holalo {
+  justify-content: flex-end;
+}
+
+.tower-col-hola {
+  justify-content: flex-end;
+  padding-right: 32px;
+}
+
+.tower-col-contact {
+  justify-content: flex-end;
+  padding-right: 54px;
+}
+
+.tower-word {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #111112;
+}
+
+.word-holalo {
+  font-size: 116px;
+  text-shadow: -2.5px 0 rgba(6, 182, 212, 0.6), 2.5px 0 rgba(239, 68, 68, 0.6);
+  background: repeating-linear-gradient(0deg, #111112 0px, #111112 2px, #333336 2px, #333336 3px);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.word-hola {
+  font-size: 102px;
+}
+
+.tower-contact-text {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.36em;
+  color: #111112;
+  opacity: 0.75;
+}
+
+/* Top Right Header Cluster in Slide 10 (Screen Top Right) */
+.contact-header-cluster {
+  position: absolute;
+  top: 36px;
+  left: 48px;
+  bottom: auto;
+  right: auto;
+  transform: rotate(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.contact-massive-num {
+  font-family: var(--font-disp);
+  font-size: 76px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 0.85;
+  margin: 4px 0;
+  color: #111112;
+}
+
+.contact-sub-ticker,
+.contact-sub-ticker-bot {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  opacity: 0.75;
+}
+
+/* Far Right Edge Socials & Links */
+.contact-far-right-edge {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  bottom: auto;
+  right: auto;
+  transform: translateX(-50%) rotate(180deg);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 5;
+}
+
+.edge-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.edge-icon {
+  width: 18px;
+  height: 18px;
+  color: #111112;
+  opacity: 0.75;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.edge-icon:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.edge-vertical-text {
+  display: flex;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  writing-mode: horizontal-tb;
+  transform: none;
+}
+
+.edge-link {
+  color: #111112;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.edge-link:hover {
+  opacity: 0.55;
+}
+
+.edge-sep {
+  opacity: 0.35;
+}
+
+/* Viewfinder Elements */
+.vf-corner {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+.vf-corner.vf-tl {
+  bottom: 36px;
+  right: 36px;
+  transform: rotate(180deg);
+}
+
+.vf-corner.vf-tr {
+  bottom: 36px;
+  left: 36px;
+  transform: rotate(180deg);
+}
+
+.vf-corner.vf-bl {
+  top: 36px;
+  right: 36px;
+  transform: rotate(180deg);
+}
+
+.vf-corner.vf-br {
+  top: 36px;
+  left: 48px;
+  transform: rotate(180deg);
+}
+
+.vf-crosshair {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.vf-crosshair.c-1 {
+  top: 55%;
+  left: 40%;
+  transform: rotate(180deg);
+}
+
+.vf-crosshair.c-2 {
+  top: 35%;
+  right: 25%;
+  transform: rotate(180deg);
+}
+
+.vf-sparkle-star {
+  position: absolute;
+  top: 60px;
+  right: 60px;
+  bottom: auto;
+  left: auto;
+  transform: rotate(180deg);
+  font-size: 32px;
+  color: rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+/* Upright Adaptations when Slide 10 is Directly Active (activeIdx = 9) */
+#sec-9.active .smpte-test-strip {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  width: 100% !important;
+  max-width: 520px !important;
+  height: 24px !important;
+  margin: 40px 0 0 60px !important;
+  border: 1px solid rgba(0, 0, 0, 0.14) !important;
+}
+
+#sec-9.active .contact-tower-stage {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin: 36px 0 0 60px !important;
+}
+
+#sec-9.active .tower-col {
+  transform: none !important;
+  justify-content: flex-start !important;
+}
+
+#sec-9.active .tower-col-hola {
+  padding-right: 0 !important;
+}
+
+#sec-9.active .tower-col-contact {
+  padding-right: 0 !important;
+}
+
+#sec-9.active .word-holalo {
+  font-size: 130px !important;
+  line-height: 0.88 !important;
+}
+
+#sec-9.active .word-hola {
+  font-size: 110px !important;
+  line-height: 0.88 !important;
+}
+
+#sec-9.active .tower-contact-text {
+  margin-top: 8px !important;
+  font-size: 13px !important;
+  letter-spacing: 0.4em !important;
+}
+
+#sec-9.active .contact-header-cluster {
+  position: absolute !important;
+  top: 48px !important;
+  right: 60px !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  align-items: flex-end !important;
+}
+
+#sec-9.active .contact-far-right-edge {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+  margin: 32px 0 0 60px !important;
+}
+
+#sec-9.active .vf-sparkle-star {
+  position: absolute !important;
+  top: 240px !important;
+  right: 120px !important;
+  transform: none !important;
+  font-size: 40px !important;
+  color: rgba(0, 0, 0, 0.15) !important;
+}
+
+#sec-9.active .vf-corner.vf-br {
+  position: absolute !important;
+  bottom: 80px !important;
+  left: 60px !important;
+  top: auto !important;
+  right: auto !important;
+  transform: none !important;
+}
+
+#sec-9.active .vf-crosshair.c-2 {
+  position: absolute !important;
+  top: 45% !important;
+  right: 20% !important;
+  transform: none !important;
+}
+
+/* ==========================================================================
+   INTERACTIVE FLOATING "BOOK A PROJECT / SAY HELLO" CALL-TO-ACTION CARD
+   Pixel-Matched to Mockup Container, Glassmorphic Elevated Container
+   ========================================================================== */
+#book-project-cta {
+  position: fixed;
+  bottom: clamp(52px, 6.8vh, 76px);
+  right: clamp(24px, 3.8vw, 64px);
+  width: clamp(310px, 26vw, 375px);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(0, 0, 0, 0.22);
+  border-radius: 20px;
+  padding: 16px 20px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
+  z-index: 120;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, opacity 0.3s ease;
+  pointer-events: auto;
+}
+
+#book-project-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.14);
+}
+
+.book-card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #111112;
+}
+
+.book-card-arrow {
+  font-size: 15px;
+  transition: transform 0.25s ease;
+}
+
+#book-project-cta:hover .book-card-arrow {
+  transform: translateX(4px);
+}
+
+.book-card-subline {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 6px 0 10px 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  opacity: 0.65;
+}
+
+.subline-rule {
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* Action Email Pill Button */
+.book-email-pill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: rgba(248, 247, 244, 0.8);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  margin-bottom: 10px;
+}
+
+.book-email-pill:hover {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.4);
+}
+
+.email-pill-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: #111112;
+}
+
+.email-envelope-icon {
+  width: 15px;
+  height: 15px;
+  opacity: 0.85;
+}
+
+/* Glowing Pulsing Green Status Dot */
+.status-pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  animation: pulseGreenGlow 2s infinite;
+}
+
+@keyframes pulseGreenGlow {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.book-card-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+
+.status-email-link {
+  color: #111112;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 1px;
+  transition: opacity 0.2s;
+}
+
+.status-email-link:hover {
+  opacity: 0.65;
+}
+
+.avail-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #dcfce7;
+  color: #15803d;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.avail-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.book-card-socials {
+  display: flex;
+  gap: 12px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 8px;
+}
+
+.book-card-socials a {
+  color: #111112;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.book-card-socials a:hover {
+  opacity: 0.55;
+}
+
+/* Toast Alert Feedback */
+#portfolio-toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: #111112;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#portfolio-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   LEFT MARGIN HUD COUNTER & VERTICAL DOTS
+   -------------------------------------------------------------------------- */
+.js-dots-panel {
+  position: fixed;
+  left: clamp(16px, 2.5vw, 36px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.js-counter-vertical {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  margin-bottom: 8px;
+  opacity: 0.65;
+}
+
+.js-dots-col {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.js-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.25;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.js-dot.active {
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+/* --------------------------------------------------------------------------
+   HEADER & FOOTER HUD
+   -------------------------------------------------------------------------- */
+.hud {
+  position: fixed;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px clamp(20px, 3.5vw, 44px);
+  z-index: 200;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.hud > * {
+  pointer-events: auto;
+}
+
+#top {
+  top: 0;
+}
+
+#bot {
+  bottom: 0;
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+}
+
+.brand-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f59e0b;
+}
+
+#mute-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  transition: opacity 0.2s, background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+#mute-btn.is-active {
+  background: #111112 !important;
+  color: #ffffff !important;
+  border-color: #111112 !important;
+  opacity: 1 !important;
+}
+
+#nav-cluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#nav-cluster button, #jump button {
+  background: transparent;
+  color: inherit;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.2s, background-color 0.2s;
+}
+
+#nav-cluster button:hover, #jump button:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+#jump {
+  display: flex;
+  gap: 4px;
+}
+
+#jump button[aria-current="true"] {
+  opacity: 1;
+  background: #111112;
+  color: #ffffff;
+  border-color: #111112;
+}
+
+#hint {
+  opacity: 0.55;
+  font-size: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   ORIGINAL VIBRANT RED CINEMATIC INTRO OVERLAY (#intro)
+   Drawing golden spiral rectangles and logarithmic arcs with SVG line animation
+   -------------------------------------------------------------------------- */
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: #f01c1c;
+  transition: transform 1.1s cubic-bezier(0.7, 0, 0.2, 1), opacity 1s cubic-bezier(0.7, 0, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#intro.out,
+#intro.dismissed {
+  transform: scale(3.2);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#intro svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+#intro path {
+  fill: none;
+  stroke: #ffffff;
+  stroke-linecap: square;
+}
+
+.dr {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: dr 0.9s cubic-bezier(0.6, 0, 0.3, 1) forwards;
+  animation-delay: var(--d);
+}
+
+@keyframes dr {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+#mono {
+  position: absolute;
+  left: 6%;
+  top: 11%;
+  color: #ffffff;
+  font-family: var(--font-disp, "Cormorant Garamond", Georgia, serif);
+  font-weight: 600;
+  font-size: clamp(48px, 6vw, 76px);
+  letter-spacing: -0.02em;
+  opacity: 0;
+  animation: fi 1s 1.6s forwards;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.intro-prompt-badge {
+  position: absolute;
+  bottom: 8%;
+  left: 6%;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 8px 18px;
+  border-radius: 999px;
+  opacity: 0;
+  animation: fi 1s 2s forwards;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes fi {
+  to {
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   VIDEO SHOWCASE MODAL (#v)
+   -------------------------------------------------------------------------- */
+dialog#v {
+  width: min(1080px, 92vw);
+  max-height: 92vh;
+  background: #0d0e12;
+  color: #f1f1f4;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.85);
+  border-radius: 6px;
+  padding: 28px;
+  overflow-y: auto;
+  margin: auto;
+}
+
+dialog#v::backdrop {
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.vh {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+}
+
+#vt {
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+#vm {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+#vx {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 8px 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background-color 0.2s;
+}
+
+#vx:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.video-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.v-meta {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+#vd {
+  font-size: 14px;
+  line-height: 1.65;
+  opacity: 0.85;
+}
+
+.v-specs {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 18px;
+}
+
+.v-specs strong {
+  color: #ffffff;
+  display: block;
+  margin-bottom: 4px;
+}
+
+#verr {
+  color: #fbbf24;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(251, 191, 36, 0.08);
+  border-left: 2px solid #fbbf24;
+}
+
+/* --------------------------------------------------------------------------
+   PREFERS-REDUCED-MOTION FLATTENED GRID (#flat)
+   -------------------------------------------------------------------------- */
+#flat {
+  position: fixed;
+  inset: 0;
+  display: none;
+  overflow-y: auto;
+  padding: 80px 24px;
+  background: #F9F8F5;
+  color: #111112;
+  z-index: 15;
+}
+
+body.reduced #flat {
+  display: block;
+}
+
+body.reduced #stage,
+body.reduced #intro {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #intro {
+    display: none !important;
+  }
+}
+
+.flat-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.flat-card {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 32px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE OVERRIDES (MOBILE & ALL-ASPECT SCREEN CONTAINMENT)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hud {
+    padding: 12px 16px;
+  }
+  #top {
+    background: rgba(249, 248, 245, 0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  #bot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    background: rgba(249, 248, 245, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+  }
+  #jump, #hint {
+    display: none;
+  }
+  #nav-cluster {
+    width: 100%;
+    justify-content: space-between;
+  }
+  #nav-cluster button {
+    flex: 1;
+    text-align: center;
+  }
+  .js-dots-panel {
+    display: none;
+  }
+
+  /* Slide 0 (Cover / Hero) containment below top HUD */
+  .home-container {
+    top: 50px !important;
+    left: clamp(14px, 3.5vw, 20px) !important;
+    right: clamp(14px, 3.5vw, 20px) !important;
+    bottom: 8px !important;
+    height: calc(100% - 58px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+  .home-mono-badge {
+    font-size: 8.5px !important;
+    letter-spacing: 0.16em !important;
+  }
+  .home-eyebrow {
+    font-size: 8.5px !important;
+    letter-spacing: 0.16em !important;
+    margin-bottom: 4px !important;
+  }
+  .home-title {
+    font-size: clamp(20px, 5.5vw, 26px) !important;
+    line-height: 0.96 !important;
+    margin-bottom: 6px !important;
+  }
+  .home-desc {
+    font-size: clamp(10px, 2.7vw, 11.5px) !important;
+    line-height: 1.42 !important;
+    margin-bottom: 6px !important;
+    max-width: 100% !important;
+  }
+  .home-meta {
+    font-size: 8.5px !important;
+    line-height: 1.35 !important;
+  }
+  .home-arch-wrap {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  /* Slide 1 - 7 (Project Slides) containment below top HUD */
+  .sec-content {
+    top: 50px !important;
+    left: clamp(14px, 3.5vw, 20px) !important;
+    right: clamp(14px, 3.5vw, 20px) !important;
+    bottom: 8px !important;
+    height: calc(100% - 58px) !important;
+    padding: 0 !important;
+  }
+  .sec-top {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin-bottom: 4px !important;
+  }
+  .sec-narrative-box {
+    display: none;
+  }
+  .js-client-logo {
+    width: 26px !important;
+  }
+  .sec-video-wrap {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: auto;
+    max-width: 100%;
+    max-height: clamp(110px, 18vh, 145px) !important;
+    aspect-ratio: 16 / 9;
+    margin: auto auto !important;
+    align-self: center;
+  }
+  .sec-bot {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin-top: auto;
+    gap: 8px;
+  }
+  .js-section-title {
+    font-size: clamp(15px, 4vw, 18px) !important;
+    margin-bottom: 2px !important;
+  }
+  .sec-metadata {
+    font-size: 8px !important;
+    line-height: 1.3 !important;
+  }
+  .js-view-icon, .js-scroll-pill {
+    width: 32px !important;
+    height: 52px !important;
+  }
+  .js-eye-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  /* Slide 09 (About Me) Mobile Editorial Stack */
+  .about-container {
+    top: 50px !important;
+    left: 14px !important;
+    right: 14px !important;
+    bottom: 8px !important;
+    height: calc(100% - 58px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+  .about-header-row {
+    margin-bottom: 4px !important;
+  }
+  .about-tag {
+    font-size: 8.5px !important;
+    letter-spacing: 0.14em !important;
+  }
+  .about-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    flex: 1 !important;
+    justify-content: flex-start !important;
+  }
+  .about-left-col {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .about-right-col {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  .about-headline-wrap {
+    max-width: 100% !important;
+  }
+  .about-headline {
+    font-size: clamp(13px, 3.4vw, 15px) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 4px !important;
+  }
+  .bbox-word {
+    padding: 1px 3px !important;
+  }
+  .bbox-h {
+    width: 3px !important;
+    height: 3px !important;
+  }
+  .about-bio {
+    font-size: clamp(8.5px, 2.2vw, 9.5px) !important;
+    line-height: 1.35 !important;
+    max-width: 100% !important;
+    margin-bottom: 5px !important;
+    opacity: 0.85 !important;
+  }
+  .editor-workspace-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+    width: 100% !important;
+  }
+  .nle-timeline-strip {
+    padding: 3px 6px !important;
+    width: auto !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .nle-scrubber-row {
+    font-size: 7px !important;
+    margin-bottom: 2px !important;
+  }
+  .nle-filmstrip-row {
+    gap: 2px !important;
+    margin-bottom: 2px !important;
+  }
+  .nle-frame {
+    width: 28px !important;
+    height: 18px !important;
+  }
+  .nle-track-lane {
+    font-size: 7px !important;
+  }
+  .nle-transport-btn {
+    font-size: 7px !important;
+  }
+  .vintage-monitor-wrap {
+    width: clamp(80px, 22vw, 96px) !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+  }
+  .monitor-hud-top {
+    display: none !important;
+  }
+  .vintage-monitor-screen {
+    aspect-ratio: 16 / 9.8 !important;
+  }
+  .monitor-frosted-play {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .monitor-frosted-play svg {
+    width: 8px !important;
+    height: 8px !important;
+  }
+  .monitor-rec-row {
+    display: none !important;
+  }
+  .monitor-hud-bot {
+    bottom: 2px !important;
+    left: 3px !important;
+    right: 3px !important;
+  }
+  .monitor-title {
+    font-size: 7px !important;
+  }
+  .monitor-frame-ct {
+    font-size: 6px !important;
+  }
+  .film-collage-top,
+  .film-collage-bot,
+  .collage-arrow-1,
+  .collage-arrow-2,
+  .capsule-hello-pill,
+  .bbox-arrow-svg {
+    display: none !important;
+  }
+  .toolkit-inspector-card.about-toolkit {
+    border-left: none;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+    padding: 4px 6px !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .inspector-section {
+    padding: 1px 0 !important;
+  }
+  .inspector-header {
+    font-size: 7.5px !important;
+    margin-bottom: 1px !important;
+  }
+  .inspector-icon {
+    width: 8px !important;
+    height: 8px !important;
+  }
+  .inspector-list {
+    font-size: 7px !important;
+    line-height: 1.25 !important;
+  }
+  .inspector-divider {
+    margin: 2px 0 !important;
+  }
+  .card-h {
+    width: 3px !important;
+    height: 3px !important;
+  }
+  .about-bottom-bar {
+    padding-top: 3px !important;
+    margin-top: auto !important;
+  }
+  .about-inquiries-box {
+    font-size: 8px !important;
+    line-height: 1.3 !important;
+  }
+  .inquiries-email {
+    font-size: 8px !important;
+  }
+  .inquiries-role {
+    font-size: 7px !important;
+  }
+
+  /* Slide 10 Upright Adaptation on Mobile below top HUD */
+  #sec-9.active .smpte-test-strip {
+    margin: 50px 0 0 16px !important;
+    max-width: calc(100% - 32px) !important;
+    height: 14px !important;
+  }
+  #sec-9.active .contact-header-cluster {
+    top: 50px !important;
+    right: 16px !important;
+  }
+  #sec-9.active .contact-massive-num {
+    font-size: clamp(24px, 6.5vw, 34px) !important;
+  }
+  #sec-9.active .contact-sub-ticker,
+  #sec-9.active .contact-sub-ticker-bot {
+    font-size: 7.5px !important;
+  }
+  #sec-9.active .contact-tower-stage {
+    margin: 12px 0 0 16px !important;
+    gap: 2px !important;
+  }
+  #sec-9.active .word-holalo {
+    font-size: clamp(32px, 8.8vw, 44px) !important;
+    line-height: 0.88 !important;
+  }
+  #sec-9.active .word-hola {
+    font-size: clamp(26px, 7.2vw, 36px) !important;
+    line-height: 0.88 !important;
+  }
+  #sec-9.active .tower-contact-text {
+    font-size: 8.5px !important;
+    letter-spacing: 0.25em !important;
+    margin-top: 4px !important;
+  }
+  #sec-9.active .contact-far-right-edge {
+    margin: 12px 0 0 16px !important;
+    gap: 12px !important;
+  }
+  #sec-9.active .edge-link {
+    font-size: 11px !important;
+  }
+  #sec-9.active .vf-sparkle-star,
+  #sec-9.active .vf-crosshair,
+  #sec-9.active .vf-corner {
+    display: none !important;
+  }
+
+  /* Floating #book-project-cta on Mobile */
+  #book-project-cta {
+    bottom: clamp(52px, 6.5vh, 66px) !important;
+    left: 14px !important;
+    right: 14px !important;
+    width: auto !important;
+    max-width: 320px !important;
+    margin: 0 auto !important;
+    padding: 10px 14px !important;
+    border-radius: 14px !important;
+  }
+  .book-card-top-row {
+    font-size: 11px !important;
+  }
+  .book-card-subline {
+    margin: 4px 0 8px 0 !important;
+  }
+  .book-email-pill {
+    padding: 6px 10px !important;
+    margin-bottom: 8px !important;
+  }
+  .email-pill-addr {
+    font-size: 11px !important;
+  }
+  .status-email-link {
+    font-size: 10px !important;
+  }
+  .avail-badge {
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+  }
+
+  .v-meta {
+    grid-template-columns: 1fr;
+  }
+  .v-specs {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 0;
+    padding-top: 14px;
+  }
+}
+</style>
+</head>
+<body class="bg-light">
+
+<!-- Canvas for real-time generative moiré spiral lines in thin black contours -->
+<canvas id="canvas"></canvas>
+
+<!-- Golden Spiral Stage -->
+<div id="stage" aria-hidden="false">
+  <div class="js-spiral" id="world"></div>
+</div>
+
+<!-- Reduced Motion Fallback -->
+<div id="flat">
+  <div class="flat-grid" id="flat-content"></div>
+</div>
+
+<!-- Left Vertical Dot Navigation -->
+<div class="js-dots-panel">
+  <div class="js-counter-vertical"><span class="js-current">1</span> / <span class="js-total">10</span></div>
+  <div class="js-dots-col" id="dots-container"></div>
+</div>
+
+<!-- Top HUD Navigation -->
+<header class="hud" id="top">
+  <div class="brand-badge">
+    <div class="brand-dot"></div>
+    <strong id="nm">imagica</strong>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px">
+    <span id="ct" aria-hidden="true">01 / 10</span>
+  </div>
+</header>
+
+<!-- Bottom HUD Navigation -->
+<footer class="hud" id="bot">
+  <div id="nav-cluster">
+    <button id="pr" aria-label="Previous project">←</button>
+    <button id="nx" aria-label="Next project">→</button>
+    <button id="mute-btn" aria-label="Toggle audio" title="Toggle sound">🔇 Sound</button>
+    <button id="pl" aria-label="Play current project video">Play ▷</button>
+    <button id="st" aria-label="Return to beginning">Start</button>
+  </div>
+  <nav id="jump" aria-label="Jump to project"></nav>
+  <span id="hint">Scroll ↓ / ↑ or Keys ← →</span>
+</footer>
+
+<!-- Interactive Floating "BOOK A PROJECT / SAY HELLO" CTA Dock (Slide 09 & 10) -->
+<div class="book-project-card" id="book-project-cta" style="display:none;opacity:0;">
+  <div class="book-card-top-row" role="button" tabindex="0" onclick="window.location.href='mailto:gogutroon@gmail.com'" style="cursor:pointer">
+    <span class="book-card-title">BOOK A PROJECT / SAY HELLO</span>
+    <span class="book-card-arrow">───→</span>
+  </div>
+  <div class="book-card-subline">
+    <span class="subline-rule"></span>
+    <span class="subline-text">send mail</span>
+  </div>
+  <div class="book-email-pill js-copy-email" role="button" tabindex="0" title="Click to copy email address">
+    <div class="email-pill-left">
+      <svg class="email-envelope-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+      </svg>
+      <span class="email-pill-addr">gogutroon@gmail.com</span>
+    </div>
+    <span class="status-pulse-dot" title="Available for work"></span>
+  </div>
+  <div class="book-card-status-row">
+    <a href="mailto:gogutroon@gmail.com" class="status-email-link">gogutroon@gmail.com</a>
+    <div class="avail-badge">
+      <span class="avail-dot"></span>
+      <span>available for work</span>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Feedback Notification -->
+<div id="portfolio-toast" role="status" aria-live="polite">✓ Copied gogutroon@gmail.com to clipboard!</div>
+
+<!-- Interactive Red Opening Screen -->
+<div id="intro" role="dialog" aria-modal="true" aria-label="Interactive introduction">
+  <div id="mono">imagica</div>
+  <div class="intro-prompt-badge">Click or Scroll to Enter</div>
+</div>
+
+<!-- Video Viewer Modal Dialog -->
+<dialog id="v" aria-label="Video Showcase Player">
+  <div class="vh">
+    <div>
+      <h2 id="vt">Project Title</h2>
+      <div id="vm">Category · Year · Tools</div>
+    </div>
+    <button id="vx" aria-label="Close video viewer">Close ✕</button>
+  </div>
+  <div class="video-container">
+    <video id="vid" controls preload="metadata" playsinline></video>
+  </div>
+  <p id="verr" hidden></p>
+  <div class="v-meta">
+    <div id="vd"></div>
+    <div class="v-specs" id="vspecs"></div>
+  </div>
+</dialog>
+
+<script>
+/**
+ * ==============================================================================
+ * PORTFOLIO DATA & SECTIONS
+ * Light Theme & Harmonized Color Vibes for All 8 Videos in videos/
+ * Slide 0: Home Cover | Slides 1-8: 8 Autoplaying Videos in Sequence | Slide 9: About Me | Slide 10: Hello. Contact
+ * ==============================================================================
+ */
+const SECTIONS_DATA = [
+  // 0: AUTHENTIC HOME / COVER PAGE (Spacious, airy editorial layout)
+  {
+    type: 'home',
+    bg: '#FAF8F5',
+    fg: '#121214',
+    accent: '#111112',
+    title: 'Direct / Edit / Rhythm',
+    modalTitle: 'Cut. Grade. Compose.',
+    headlineHtml: 'Direct.<br>Edit.<br>Rhythm.',
+    eyebrow: 'Portfolio of Tanishq Rana · 2026',
+    desc: 'Montage is the architecture of time. Frame-accurate edits, kinetic typography, and organic texture direction crafted for visionary directors, artists, and global brands.',
+    meta: 'Cinematic Direction &amp; Post-Production · Based Worldwide',
+    poster: 'thumbnails/1st.jpg',
+    video: 'videos/1st.mov'
+  },
+
+  // 1: PROJECT 1 — EXECUTIVE MASTERCLASS (1st.mov) — Champagne Graphite Linen
+  {
+    type: 'project',
+    bg: '#F5F3EF',
+    fg: '#1C1917',
+    accent: '#D97706',
+    title: 'Executive Masterclass',
+    headlineHtml: 'Executive<br>Masterclass',
+    desc: 'High-impact narrative pacing for founder storytelling. Handcrafted textured backdrops, 3D animated growth diagrams, and frame-accurate typography engineered for maximum viewer retention and clarity.',
+    with: 'Executive Growth Media',
+    tools: 'Premiere Pro, DaVinci Resolve, After Effects',
+    role: 'Lead Editor &amp; Motion Director',
+    year: '2026',
+    category: 'High-Retention Talking Head &amp; 3D Infographics',
+    aspect: '16:9 DCI 4K',
+    duration: '00:33',
+    poster: 'thumbnails/1st.jpg',
+    video: 'videos/1st.mov'
+  },
+
+  // 2: PROJECT 2 — METRO NOCTURNE (2nd.mov) — Pale Emerald Subway Mist
+  {
+    type: 'project',
+    bg: '#EEF5F1',
+    fg: '#111A15',
+    accent: '#059669',
+    title: 'Metro Nocturne',
+    headlineHtml: 'Metro<br>Nocturne',
+    desc: 'Surrealist music video direction fusing 90s CRT analog display aesthetics with nocturnal subway cinematography. Floating fluorescent greens, deep shadows, and tactile serif typography synced to atmospheric beats.',
+    with: 'Analog Dreams Collective',
+    tools: 'Premiere Pro, DaVinci Resolve, Analog CRT Emulation',
+    role: 'Director &amp; Visual Effects Editor',
+    year: '2026',
+    category: 'Cinematic Music Video &amp; CRT Lyric Flow',
+    aspect: '16:9 DCI 4K',
+    duration: '00:39',
+    poster: 'thumbnails/2nd.jpg',
+    video: 'videos/2nd.mov'
+  },
+
+  // 3: PROJECT 3 — CREATIVE COLLAGE (3rd.mov) — Warm Oatmeal Craft Linen
+  {
+    type: 'project',
+    bg: '#F7F3EB',
+    fg: '#201B14',
+    accent: '#D97706',
+    title: 'Creative Collage',
+    headlineHtml: 'Creative<br>Collage',
+    desc: 'An eclectic celebration of tactile mixed-media: handcrafted linen paper textures, stippled butterfly stop-motion, blueprint newsprint collage, and kinetic graphic identity. Breathing analog soul into digital compositions.',
+    with: 'Mixed Media Collective',
+    tools: 'Photoshop, After Effects, Premiere Pro',
+    role: 'Creative Director &amp; Mixed-Media Animator',
+    year: '2026',
+    category: 'Mixed-Media Stop-Motion &amp; Stippled Animation',
+    aspect: '16:9 DCI 4K',
+    duration: '00:05',
+    poster: 'thumbnails/3rd.jpg',
+    video: 'videos/3rd.mov'
+  },
+
+  // 4: PROJECT 4 — MULTIDISCIPLINARY REEL (4th.mov) — Cool Iris Lavender Mist
+  {
+    type: 'project',
+    bg: '#F2F1F8',
+    fg: '#161324',
+    accent: '#7C3AED',
+    title: 'Multidisciplinary Reel',
+    headlineHtml: 'Multidisciplinary<br>Reel',
+    desc: 'Four simultaneous creative dimensions in rhythm: studio hardware cinematography, glowing conversational AI interfaces, pastel isometric typography grids, and financial data audio visualizers.',
+    with: 'Studio Visual FX &amp; Sound',
+    tools: 'Cinema 4D, After Effects, Premiere Pro',
+    role: 'Motion Designer &amp; Offline Editor',
+    year: '2026',
+    category: 'Studio Motion &amp; AI Interface Direction',
+    aspect: '16:9 DCI 4K',
+    duration: '00:07',
+    poster: 'thumbnails/4th.jpg',
+    video: 'videos/4th.mov'
+  },
+
+  // 5: PROJECT 5 — LYRICAL ROMANCE (5th.mov) — Soft Petal Blush Lilac
+  {
+    type: 'project',
+    bg: '#F8F2F7',
+    fg: '#221420',
+    accent: '#C026D3',
+    title: 'Lyrical Romance',
+    headlineHtml: 'Lyrical<br>Romance',
+    desc: 'Gentle watercolor anime illustration paired with modern minimalist kinetic typography. Every lyrical stanza glides across soft pastel skies, tracking the tender emotional nuance of romantic devotion.',
+    with: 'Sound &amp; Motion Records',
+    tools: 'Clip Studio Paint, Premiere Pro, After Effects',
+    role: 'Lead Editor &amp; Typographer',
+    year: '2026',
+    category: 'Webtoon Animation &amp; Kinetic Lyric Typography',
+    aspect: '16:9 DCI 4K',
+    duration: '00:30',
+    poster: 'thumbnails/5th.jpg',
+    video: 'videos/5th.mov'
+  },
+
+  // 6: PROJECT 6 — CRIMSON RESONANCE (6th.mov) — Velvet Rose Quartz Carmine
+  {
+    type: 'project',
+    bg: '#FAF1F2',
+    fg: '#241214',
+    accent: '#DC2626',
+    title: 'Crimson Resonance',
+    headlineHtml: 'Crimson<br>Resonance',
+    desc: 'Visceral high-fashion motion art. Liquid chrome spheres levitating within a saturated crimson velvet chamber, wrapped around an interactive custom audio playback interface designed for industrial soundscapes.',
+    with: 'Avant-Garde Audio Lab',
+    tools: 'Blender 3D, After Effects, DaVinci Resolve',
+    role: '3D Artist &amp; Compositor',
+    year: '2025',
+    category: '3D Motion &amp; Audio Interface Art',
+    aspect: '16:9 DCI 4K',
+    duration: '00:24',
+    poster: 'thumbnails/6th.jpg',
+    video: 'videos/6th.mov'
+  },
+
+  // 7: PROJECT 7 — MINIMALIST IDENTITY (7th.mov) — Warm Sunlight Canary Ivory
+  {
+    type: 'project',
+    bg: '#FAF7EB',
+    fg: '#1C1A10',
+    accent: '#D97706',
+    title: 'Minimalist Identity',
+    headlineHtml: 'Minimalist<br>Identity',
+    desc: 'Radical graphic reduction. An analog projector beam cutting across negative space to unveil editorial identity, pivoting into bold Swiss kinetic typography where negative space commands the frame.',
+    with: 'Modern Media Studio',
+    tools: 'After Effects, Illustrator, Premiere Pro',
+    role: 'Brand Motion Designer',
+    year: '2025',
+    category: 'Swiss Graphic Motion &amp; Identity Direction',
+    aspect: '16:9 DCI 4K',
+    duration: '00:11',
+    poster: 'thumbnails/7th.jpg',
+    video: 'videos/7th.mov'
+  },
+
+  // 8: DEDICATED ABOUT ME SLIDE (Slide 09 / 10 · Profile & Philosophy)
+  {
+    type: 'about',
+    bg: '#F7F5F0',
+    fg: '#121214',
+    accent: '#111112',
+    title: 'Profile & Philosophy',
+    modalTitle: "Director's Reel",
+    headlineHtml: 'Profile &amp;<br>Philosophy',
+    desc: 'Every cut is a heartbeat. Every frame a deliberate choice in the architecture of emotion.',
+    bio: 'Based in New Delhi and collaborating with visionary directors, commercial agencies, and artists globally. Over seven years specializing in high-cadence commercial montage, kinetic typography, music videos, and organic celluloid texture mastering.',
+    tools: 'DaVinci Resolve Studio · Premiere Pro · After Effects · Mocha Pro · DeHancer Pro',
+    capabilities: 'Commercial Montage · Retention Pacing · Kinetic Typography · 2.5D Parallax · 16mm Color Grading',
+    email: 'gogutroon@gmail.com',
+    meta: 'Tanishq Rana — Motion Director &amp; Lead Film Editor',
+    poster: 'thumbnails/8th.jpg',
+    video: 'videos/8th.mov'
+  },
+
+  // 9: DEDICATED "HOLA." CONTACT SLIDE (Slide 10 / 10 · Reference 1:1 Matched)
+  {
+    type: 'contact',
+    bg: '#F8F7F4',
+    fg: '#111112',
+    accent: '#111112',
+    title: 'Hello.',
+    headlineHtml: 'HOLA.',
+    email: 'gogutroon@gmail.com',
+    meta: 'Available Worldwide for Commercial, Narrative &amp; Experimental Work',
+    poster: 'thumbnails/8th.jpg',
+    video: 'videos/8th.mov'
+  }
+];
+
+const SECTION_COUNT = SECTIONS_DATA.length;
+const ASPECT = 0.618033;
+const AXIS = 0.7237;
+
+/**
+ * ==============================================================================
+ * GENERATIVE DELICATE BLACK ABSTRACT PATTERNS (Micro-fine Guilloché / Moiré Lines)
+ * ==============================================================================
+ */
+function getAbstractPatternSVG(idx) {
+  const cx = 724;
+  const cy = 447;
+  let paths = '';
+
+  // Concentric radiating guilloché arcs in micro-fine black linework
+  for (let r = 24; r <= 1500; r += 24) {
+    paths += `<circle cx="${cx}" cy="${cy}" r="${r}" stroke="rgba(0,0,0,0.11)" stroke-width="0.7" />`;
+  }
+
+  // Cross-hatching subtle geometric arcs
+  for (let r = 80; r <= 1200; r += 72) {
+    paths += `<path d="M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}" stroke="rgba(0,0,0,0.06)" stroke-width="0.6" stroke-dasharray="4,8" />`;
+  }
+
+  return `
+    <svg class="sec-abstract-pattern" viewBox="0 0 1000 1000" fill="none" preserveAspectRatio="none" aria-hidden="true">
+      ${paths}
+    </svg>
+  `;
+}
+
+/**
+ * ==============================================================================
+ * SVG MONOGRAM GLYPHS FOR EACH PROJECT (Crisp top-left vector marks)
+ * ==============================================================================
+ */
+function getMonogramSVG(idx) {
+  const stroke = '#111112';
+  switch (idx) {
+    case 0: // Golden Ratio Spiral Monogram
+      return `<svg class="js-client-logo" viewBox="0 0 100 100" fill="none" stroke="${stroke}" stroke-width="4"><rect x="10" y="10" width="80" height="80" rx="4"/><path d="M10 90 A 80 80 0 0 1 90 10 A 50 50 0 0 1 40 60 A 30 30 0 0 1 70 90"/></svg>`;
+    case 1: // Project 1: Executive Masterclass (Aperture / Peak Geometric Monogram)
+      return `<svg class="js-client-logo" viewBox="0 0 100 100" fill="none" stroke="${stroke}" stroke-width="4.5"><circle cx="50" cy="50" r="42"/><polygon points="50,16 80,78 20,78"/><circle cx="50" cy="56" r="10"/></svg>`;
+    case 2: // Project 2: CRT Subway Monitor ("It's Pity")
+      return `<svg class="js-client-logo" viewBox="0 0 100 100" fill="none" stroke="${stroke}" stroke-width="4.5"><rect x="14" y="22" width="72" height="56" rx="10"/><rect x="22" y="30" width="56" height="40" rx="6"/><line x1="38" y1="12" x2="46" y2="22"/><line x1="62" y1="12" x2="54" y2="22"/><circle cx="86" cy="40" r="2" fill="${stroke}"/><circle cx="86" cy="50" r="2" fill="${stroke}"/></svg>`;
+    case 3: // Project 3: Stippled Butterfly Metamorphosis & Mixed Media
+      return `<svg class="js-client-logo" viewBox="0 0 100 100" fill="none" stroke="${stroke}" stroke-width="4"><path d="M50 20 Q 25 15, 15 40 Q 8 65, 30 75 Q 45 80, 50 60"/><path d="M50 20 Q 75 15, 85 40 Q 92 65, 70 75 Q 55 80, 50 60"/><line x1="50" y1="15" x2="50" y2="85" stroke-width="5"/></svg>`;
+    case 4: // Project 4: 4-Quadrant Multidisciplinary Grid
+      return `<svg class="js-client-logo" viewBox="0 0 100 100" fill="none" stroke="${stroke}" stroke-width="4.5"><rect x="16" y="16" width="68" height="68" rx="8"/><line x1="50" y1="16" x2="50" y2="84"/><line x1="16" y1="50" x2="84" y2="50"/><circle cx="33" cy="33" r="5" fill="${stroke}"/><circle cx="67" cy="67" r="5" fill="${stroke}"/></svg>`;
+    case 5: // Project 5: Romantic Lyric Ribbon / Heart Metaphor
+      return `<svg class="js-client-logo" viewBox="0 0 100 100" fill="none" stroke="${stroke}" stroke-width="4.5"><path d="M50 78 C25 60 15 45 15 32 C15 20 25 14 36 14 C44 14 48 18 50 24 C52 18 56 14 64 14 C75 14 85 20 85 32 C85 45 75 60 50 78 Z"/></svg>`;
+    case 6: // Project 6: 3D Chrome Spheres & Crimson Disc
+      return `<svg class="js-client-logo" viewBox="0 0 100 100" fill="none" stroke="${stroke}" stroke-width="4.5"><circle cx="50" cy="50" r="42"/><circle cx="50" cy="50" r="18"/><circle cx="50" cy="50" r="6" fill="${stroke}"/><circle cx="78" cy="28" r="8"/><circle cx="26" cy="74" r="6"/></svg>`;
+    case 7: // Project 7: Minimalist Projector Spotlight Beam
+      return `<svg class="js-client-logo" viewBox="0 0 100 100" fill="none" stroke="${stroke}" stroke-width="4.5"><rect x="12" y="36" width="22" height="28" rx="4"/><polygon points="34,42 86,16 86,84 34,58"/><line x1="86" y1="16" x2="86" y2="84" stroke-width="5"/></svg>`;
+    case 8: // Slide 09 / 10: Profile & Philosophy — Tanishq (T) Monogram Circle
+      return `<svg class="js-client-logo" viewBox="0 0 100 100" fill="none" stroke="${stroke}" stroke-width="4.5"><circle cx="50" cy="50" r="38"/><path d="M28 32 L 72 32 M 50 32 L 50 72"/><circle cx="50" cy="50" r="4" fill="${stroke}"/></svg>`;
+    case 9: // Slide 10 / 10: Contact Aperture Mark
+      return `<svg class="js-client-logo" viewBox="0 0 100 100" fill="none" stroke="${stroke}" stroke-width="4"><circle cx="50" cy="50" r="42"/><circle cx="50" cy="50" r="16"/></svg>`;
+    default:
+      return '';
+  }
+}
+
+/**
+ * ==============================================================================
+ * DOM BUILDER: CONSTRUCTING THE AUTHENTIC NARROWDESIGN DOM HIERARCHY
+ * ==============================================================================
+ */
+const world = document.getElementById('world');
+const dotsContainer = document.getElementById('dots-container');
+const jumpNav = document.getElementById('jump');
+const flatContent = document.getElementById('flat-content');
+
+SECTIONS_DATA.forEach((sec, i) => {
+  const el = document.createElement('div');
+  el.className = 'js-section';
+  el.id = `sec-${i}`;
+  el.dataset.index = i;
+  el.style.backgroundColor = sec.bg;
+  el.style.color = sec.fg;
+
+  // Thin Abstract Linework SVG Pattern
+  el.innerHTML = getAbstractPatternSVG(i);
+
+  // Inner Arc Guide
+  const arc = document.createElement('div');
+  arc.className = 'js-arc';
+  el.appendChild(arc);
+
+  if (sec.type === 'home') {
+    // ----------------------------------------------------
+    // SLIDE 0: DEDICATED HOME / COVER SLIDE
+    // ----------------------------------------------------
+    const homeEl = document.createElement('div');
+    homeEl.className = 'home-container';
+    homeEl.innerHTML = `
+      <div class="home-top-row">
+        ${getMonogramSVG(0)}
+        <div class="home-mono-badge">${sec.eyebrow}</div>
+      </div>
+      <div class="home-center-stage">
+        <span class="home-eyebrow">Direct · Edit · Rhythm</span>
+        <h1 class="home-title">${sec.headlineHtml}</h1>
+        <p class="home-desc">${sec.desc}</p>
+      </div>
+      <div class="home-bot-row">
+        <div class="home-meta">
+          <span>${sec.meta}</span>
+          <span style="opacity:0.6;margin-top:4px;display:block">Scroll or Drag to Explore 07 Film Works ↓</span>
+        </div>
+        <div class="js-scroll-pill js-scroll" role="button" tabindex="0" aria-label="Scroll to first project">
+          <svg viewBox="0 0 37 59" fill="none" stroke="#ffffff" stroke-width="2">
+            <rect x="1" y="1" width="35" height="35" stroke-opacity="0.3"/>
+            <path d="M1 1 C 20 1 36 17 36 36 C 36 48 26 58 14 58" stroke="#ffffff"/>
+          </svg>
+          <span class="js-scroll-text">Explore</span>
+        </div>
+      </div>
+    `;
+    el.appendChild(homeEl);
+
+  } else if (sec.type === 'about') {
+    // ----------------------------------------------------
+    // SLIDE 8 (Index 8): DEDICATED ABOUT ME SLIDE (09 / 10 · PROFILE & PHILOSOPHY)
+    // ----------------------------------------------------
+    const aboutEl = document.createElement('div');
+    aboutEl.className = 'about-container';
+    aboutEl.innerHTML = `
+      <div class="about-header-row">
+        ${getMonogramSVG(8)}
+        <div class="about-tag">09 / 10 · PROFILE &amp; PHILOSOPHY</div>
+      </div>
+      <div class="about-grid">
+        <div class="about-left-col">
+          <div class="about-headline-wrap">
+            <h2 class="about-headline">
+              Every cut is a <span class="scribble-word">heartbeat.
+                <svg class="scribble-svg" viewBox="0 0 220 70" fill="none" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M 10 24 C 40 8, 145 2, 206 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.85" />
+                  <path d="M 180 8 C 192 4, 208 9, 212 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.75" />
+                  <path d="M 194 6 C 204 3, 214 7, 216 11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.65" />
+                  <path d="M 16 54 C 65 50, 150 51, 202 56" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.9" />
+                  <path d="M 24 60 C 80 58, 138 59, 204 63" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.75" />
+                </svg>
+              </span> Every frame a deliberate choice in the <span class="bbox-word">architecture of emotion.
+                <span class="bbox-frame" aria-hidden="true">
+                  <span class="bbox-h h-tl"></span>
+                  <span class="bbox-h h-tc"></span>
+                  <span class="bbox-h h-tr"></span>
+                  <span class="bbox-h h-mr"></span>
+                  <span class="bbox-h h-br"></span>
+                  <span class="bbox-h h-bc"></span>
+                  <span class="bbox-h h-bl"></span>
+                  <span class="bbox-h h-ml"></span>
+                </span>
+                <svg class="bbox-arrow-svg" viewBox="0 0 90 60" fill="none" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M 80 6 C 72 26, 48 38, 8 32" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none" />
+                  <path d="M 8 32 L 24 26" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                  <path d="M 8 32 L 20 42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+              </span>
+            </h2>
+            <p class="about-bio">${sec.bio}</p>
+          </div>
+
+          <div class="editor-workspace-wrap">
+            <div class="nle-timeline-strip">
+              <div class="nle-scrubber-row">
+                <span class="nle-scrubber-bracket">[──|────────────]</span>
+                <span class="nle-timecode-tag">00:09:15:00</span>
+              </div>
+              <div class="nle-filmstrip-row">
+                <div class="nle-frame"><img src="thumbnails/2nd.jpg" alt="Film still 1"></div>
+                <div class="nle-frame"><img src="thumbnails/1st.jpg" alt="Film still 2"></div>
+                <div class="nle-frame waveform-frame">
+                  <div class="waveform-bars">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+              </div>
+              <div class="nle-tracks-row">
+                <div class="nle-transport-btn js-toggle-timeline-play" title="Toggle timeline play">⏸</div>
+                <div class="nle-track-lane audio-lane">
+                  <div class="audio-wave-line"></div>
+                  <div class="razor-cuts">
+                    <span style="left:18%"></span>
+                    <span style="left:34%"></span>
+                    <span style="left:62%"></span>
+                    <span style="left:78%"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="nle-track-lane video-lane">
+                <span class="video-lane-cut-icon">✂</span>
+                <span class="video-lane-label">visual track</span>
+                <div class="video-lane-cuts">
+                  <span style="left:45%"></span>
+                  <span style="left:80%"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="vintage-monitor-wrap js-play-reel-trigger" role="button" tabindex="0" aria-label="Play showreel">
+              <div class="monitor-hud-top">
+                <span class="monitor-res-tag">[4K / 24FPS]</span>
+                <span class="monitor-tc-tag">00:09:15:00! <span class="corner-bracket">┘</span></span>
+              </div>
+              <div class="vintage-monitor-screen">
+                <div class="monitor-rec-row">
+                  <span class="monitor-rec-dot"></span>
+                  <span class="monitor-rec-text">2867</span>
+                </div>
+                <img class="monitor-bg-poster" src="thumbnails/8th.jpg" alt="Showreel poster">
+                <div class="monitor-scanlines" aria-hidden="true"></div>
+                <div class="monitor-frosted-play">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+                </div>
+                <div class="monitor-hud-bot">
+                  <span class="monitor-title">PLAY reel</span>
+                  <span class="monitor-frame-ct">26409</span>
+                </div>
+                <div class="vp-bracket vp-tl"></div>
+                <div class="vp-bracket vp-tr"></div>
+                <div class="vp-bracket vp-bl"></div>
+                <div class="vp-bracket vp-br"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-right-col">
+          <div class="film-collage-top">
+            <div class="polaroid-frame p-1"><img src="thumbnails/4th.jpg" alt="Texture still"></div>
+            <div class="polaroid-frame p-2"><img src="thumbnails/2nd.jpg" alt="Cinema still"></div>
+            <svg class="collage-arrow-1" viewBox="0 0 70 50" fill="none">
+              <path d="M 6 42 C 20 20, 45 10, 64 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M 64 16 L 50 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M 64 16 L 56 26" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div class="toolkit-inspector-card about-toolkit">
+            <span class="card-h h-tl"></span>
+            <span class="card-h h-tc"></span>
+            <span class="card-h h-tr"></span>
+            <span class="card-h h-mr"></span>
+            <span class="card-h h-br"></span>
+            <span class="card-h h-bc"></span>
+            <span class="card-h h-bl"></span>
+            <span class="card-h h-ml"></span>
+
+            <div class="inspector-section">
+              <div class="inspector-header">
+                <span>CORE TOOLKIT</span>
+                <svg class="inspector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="4" y="4" width="16" height="16" rx="1"/>
+                  <rect x="2" y="2" width="4" height="4" fill="currentColor"/>
+                  <rect x="18" y="2" width="4" height="4" fill="currentColor"/>
+                  <rect x="18" y="18" width="4" height="4" fill="currentColor"/>
+                  <rect x="2" y="18" width="4" height="4" fill="currentColor"/>
+                  <path d="M14 9 L10 15"/>
+                </svg>
+              </div>
+              <p class="inspector-list">${sec.tools}</p>
+            </div>
+
+            <div class="inspector-divider"></div>
+
+            <div class="inspector-section">
+              <div class="inspector-header">
+                <span>CAPABILITIES</span>
+                <svg class="inspector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <line x1="4" y1="4" x2="20" y2="20"/>
+                  <line x1="20" y1="4" x2="4" y2="20"/>
+                  <circle cx="6" cy="6" r="2"/>
+                  <circle cx="18" cy="6" r="2"/>
+                </svg>
+              </div>
+              <p class="inspector-list">${sec.capabilities}</p>
+            </div>
+          </div>
+
+          <div class="film-collage-bot">
+            <div class="polaroid-frame p-3"><img src="thumbnails/5th.jpg" alt="Celluloid frame"></div>
+            <div class="polaroid-frame p-4"><img src="thumbnails/3rd.jpg" alt="Lyric frame"></div>
+            <svg class="collage-arrow-2" viewBox="0 0 60 50" fill="none">
+              <path d="M 10 40 C 18 18, 38 8, 52 14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M 52 14 L 38 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M 52 14 L 46 26" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div class="capsule-hello-pill js-go-contact" role="button" tabindex="0" aria-label="Go to Hello / Contact slide" onclick="navigateTo(9)">
+            <div class="capsule-arrow-up">↑</div>
+            <span class="capsule-hello-text">HELLO</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-bottom-bar">
+        <div class="about-inquiries-box">
+          <div>Inquiries: <a href="mailto:${sec.email}" class="inquiries-email">${sec.email}</a></div>
+          <div class="inquiries-role">${sec.meta}</div>
+        </div>
+      </div>
+    `;
+    el.appendChild(aboutEl);
+
+  } else if (sec.type === 'contact') {
+    // ----------------------------------------------------
+    // SLIDE 9 (Index 9): DEDICATED REFERENCE-ACCURATE "HOLA." CONTACT SLIDE (10 / 10)
+    // ----------------------------------------------------
+    const contactEl = document.createElement('div');
+    contactEl.className = 'contact-container redesigned-contact';
+    contactEl.innerHTML = `
+      <div class="smpte-test-strip" aria-hidden="true">
+        <div class="smpte-bar b-white"></div>
+        <div class="smpte-bar b-yellow"></div>
+        <div class="smpte-bar b-cyan"></div>
+        <div class="smpte-bar b-green"></div>
+        <div class="smpte-bar b-magenta"></div>
+        <div class="smpte-bar b-red"></div>
+        <div class="smpte-bar b-blue"></div>
+        <div class="smpte-checkerboard"></div>
+        <div class="smpte-gradient"></div>
+        <div class="smpte-scanlines"></div>
+      </div>
+
+      <div class="contact-tower-stage">
+        <!-- Closest to seam (screen left) -->
+        <div class="tower-col tower-col-holalo">
+          <div class="tower-word word-holalo">HOLALO.</div>
+        </div>
+        <!-- Middle (screen center-left) -->
+        <div class="tower-col tower-col-hola">
+          <div class="tower-word word-hola">HOLA.</div>
+        </div>
+        <!-- Right of hola (screen right of hola) -->
+        <div class="tower-col tower-col-contact">
+          <div class="tower-contact-text">CONTACT</div>
+        </div>
+      </div>
+
+      <div class="contact-header-cluster">
+        <div class="contact-sub-ticker">09 / 10</div>
+        <div class="contact-massive-num">10</div>
+        <div class="contact-sub-ticker-bot">10 / 10</div>
+      </div>
+
+      <div class="contact-far-right-edge">
+        <div class="edge-vertical-text">
+          <a href="mailto:${sec.email}" class="edge-link edge-email-prominent">${sec.email}</a>
+        </div>
+      </div>
+    `;
+    el.appendChild(contactEl);
+
+  } else {
+    // ----------------------------------------------------
+    // SLIDES 1 - 8: DEDICATED PROJECT SLIDES WITH IN-VIEW VIDEO AUTOPLAY
+    // ----------------------------------------------------
+    const contentWrap = document.createElement('div');
+    contentWrap.className = 'sec-content';
+
+    // Top Row (Logo + Description)
+    const topRow = document.createElement('div');
+    topRow.className = 'sec-top';
+    topRow.innerHTML = `
+      ${getMonogramSVG(i)}
+      <div class="sec-narrative-box">
+        ${sec.desc}
+      </div>
+    `;
+    contentWrap.appendChild(topRow);
+
+    // Center Video Showcase Frame (Autoplays seamlessly in-view!)
+    const videoWrap = document.createElement('div');
+    videoWrap.className = 'sec-video-wrap';
+    videoWrap.dataset.index = i;
+    videoWrap.setAttribute('role', 'region');
+    videoWrap.setAttribute('aria-label', `Video preview: ${sec.title}`);
+    videoWrap.innerHTML = `
+      <video class="sec-inline-video" muted playsinline loop preload="none" poster="${sec.poster || ''}">
+        <source src="${sec.video}" type="video/quicktime">
+        <source src="${sec.video}" type="video/mp4">
+      </video>
+      <div class="sec-video-badges">
+        <button class="sec-audio-btn js-audio-toggle" type="button" aria-label="Toggle video audio">
+          <span class="sec-audio-icon">🔇</span>
+          <span class="sec-audio-text">Unmute</span>
+        </button>
+        <div class="sec-video-badge js-play-trigger" data-index="${i}" role="button" tabindex="0" aria-label="Open cinema player for ${sec.title}">
+          <span class="sec-video-play-icon">▶</span>
+          <span>Cinema Mode</span>
+        </div>
+      </div>
+    `;
+
+    // Clicking the video frame (outside audio button) opens Cinema Mode
+    videoWrap.addEventListener('click', (e) => {
+      if (e.target.closest('.js-audio-toggle')) return;
+      openVideoModal(i);
+    });
+
+    contentWrap.appendChild(videoWrap);
+
+    // Bottom Row (Title + Metadata + Vertical CTA Pill)
+    const botRow = document.createElement('div');
+    botRow.className = 'sec-bot';
+    botRow.innerHTML = `
+      <div class="sec-title-wrap">
+        <a href="#" class="js-play-trigger" data-index="${i}">Watch Film ↗</a>
+        <h1 class="js-section-title">${sec.headlineHtml}</h1>
+        <div class="sec-metadata">
+          <span><strong>With:</strong> ${sec.with}</span>
+          <span><strong>Tools:</strong> ${sec.tools}</span>
+          <span><strong>Role:</strong> ${sec.role}</span>
+        </div>
+      </div>
+      <div class="js-project-cta js-play-trigger" data-index="${i}" role="button" tabindex="0" aria-label="Watch video: ${sec.title}">
+        <div class="js-project-cover">
+          <img src="${sec.poster}" alt="${sec.title} poster thumbnail">
+        </div>
+        <div class="js-view-icon">
+          <!-- Interactive Eye Icon for Active Section -->
+          <svg class="js-eye-svg" viewBox="0 0 34 34">
+            <circle class="js-eye-ball" cx="17" cy="17" r="16" fill="#111112"/>
+            <circle class="js-eye-retina" cx="17" cy="17" r="9" fill="${sec.accent}"/>
+            <circle class="js-eye-pupil" cx="17" cy="17" r="5" fill="#ffffff"/>
+            <circle class="js-eye-highlight" cx="21" cy="13" r="3" fill="#ffffff"/>
+          </svg>
+          <!-- Directional Spiral Arrow for Inactive Sections -->
+          <div class="js-arrow">
+            <svg viewBox="0 0 15 52" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="7.5" y1="52" x2="7.5" y2="2"/>
+              <polyline points="14,10 7.5,2 1,10"/>
+            </svg>
+          </div>
+          <div class="js-view-text">Watch</div>
+        </div>
+      </div>
+    `;
+    contentWrap.appendChild(botRow);
+    el.appendChild(contentWrap);
+  }
+
+  world.appendChild(el);
+
+  // Build Dot for Left Panel
+  const dot = document.createElement('div');
+  dot.className = `js-dot ${i === 0 ? 'active' : ''}`;
+  dotsContainer.appendChild(dot);
+
+  // Build Jump Button for HUD
+  const jumpBtn = document.createElement('button');
+  jumpBtn.textContent = String(i + 1).padStart(2, '0');
+  jumpBtn.setAttribute('aria-label', `Jump to project ${i + 1}: ${sec.title}`);
+  if (i === 0) jumpBtn.setAttribute('aria-current', 'true');
+  jumpBtn.addEventListener('click', () => navigateTo(i));
+  jumpNav.appendChild(jumpBtn);
+
+  // Build Reduced-Motion Flat Card
+  const flatCard = document.createElement('div');
+  flatCard.className = 'flat-card';
+  flatCard.innerHTML = `
+    <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;color:#0284c7;margin-bottom:12px">${String(i + 1).padStart(2, '0')} / ${SECTION_COUNT}</div>
+    <h2 style="font-size:28px;font-weight:800;margin-bottom:12px">${sec.title}</h2>
+    <p style="font-size:14px;line-height:1.65;margin-bottom:20px;opacity:0.85">${sec.desc}</p>
+    ${sec.video ? `<button class="js-play-flat" data-index="${i}" style="padding:10px 20px;background:#111112;color:#ffffff;font-weight:700;border:none;border-radius:2px;cursor:pointer">Play Film ▶</button>` : ''}
+  `;
+  flatContent.appendChild(flatCard);
+});
+
+/**
+ * ==============================================================================
+ * MATHEMATICAL GOLDEN SPIRAL ENGINE (from narrowdesign.com production source)
+ * ==============================================================================
+ */
+let winW = window.innerWidth;
+let winH = window.innerHeight;
+let smallScreen = winW < 960;
+let landscape = winH < winW;
+
+let spiralOriginX = 0;
+let spiralOriginY = 0;
+let sectionOriginX = 0;
+let sectionOriginY = 0;
+let baseSize = 0;
+
+let rotation = 0;
+let targetRotation = 0;
+let currentSection = 0;
+let isAnimating = false;
+let animRAF = null;
+
+const sections = document.querySelectorAll('.js-section');
+const dots = document.querySelectorAll('.js-dot');
+const jumpBtns = document.querySelectorAll('#jump button');
+const currentNumEl = document.querySelector('.js-current');
+const totalNumEl = document.querySelector('.js-total');
+const ctEl = document.getElementById('ct');
+
+totalNumEl.textContent = SECTION_COUNT;
+
+let isGlobalMuted = true;
+
+function syncAudioState() {
+  const allVideos = document.querySelectorAll('.sec-inline-video');
+  allVideos.forEach(v => {
+    v.muted = isGlobalMuted;
+  });
+
+  const muteBtn = document.getElementById('mute-btn');
+  if (muteBtn) {
+    muteBtn.innerHTML = isGlobalMuted ? '🔇 Sound' : '🔊 Sound On';
+    muteBtn.setAttribute('aria-pressed', isGlobalMuted ? 'false' : 'true');
+    if (!isGlobalMuted) {
+      muteBtn.classList.add('is-active');
+    } else {
+      muteBtn.classList.remove('is-active');
+    }
+  }
+
+  const audioBtns = document.querySelectorAll('.js-audio-toggle');
+  audioBtns.forEach(btn => {
+    const icon = btn.querySelector('.sec-audio-icon');
+    const text = btn.querySelector('.sec-audio-text');
+    if (isGlobalMuted) {
+      if (icon) icon.textContent = '🔇';
+      if (text) text.textContent = 'Unmute';
+      btn.classList.remove('is-unmuted');
+      btn.setAttribute('aria-label', 'Unmute audio');
+    } else {
+      if (icon) icon.textContent = '🔊';
+      if (text) text.textContent = 'Mute';
+      btn.classList.add('is-unmuted');
+      btn.setAttribute('aria-label', 'Mute audio');
+    }
+  });
+
+  if (!isGlobalMuted) {
+    const activeSec = sections[currentSection];
+    if (activeSec) {
+      const activeVid = activeSec.querySelector('.sec-inline-video');
+      if (activeVid) {
+        activeVid.muted = false;
+        activeVid.play().catch(() => {});
+      }
+    }
+  }
+}
+
+function toggleGlobalAudio() {
+  isGlobalMuted = !isGlobalMuted;
+  syncAudioState();
+}
+
+function buildSpiral() {
+  winW = window.innerWidth;
+  winH = window.innerHeight;
+  smallScreen = winW < 960;
+  landscape = winH < winW;
+
+  if (smallScreen && !landscape) {
+    spiralOriginX = Math.floor((winW / ASPECT) * ASPECT * (1 - AXIS));
+    spiralOriginY = Math.floor((winW / ASPECT) * AXIS);
+    sectionOriginX = spiralOriginX;
+    sectionOriginY = spiralOriginY;
+    baseSize = winW;
+  } else {
+    spiralOriginX = Math.floor(winW * AXIS);
+    spiralOriginY = Math.floor(winW * ASPECT * AXIS);
+    sectionOriginX = spiralOriginX;
+    sectionOriginY = spiralOriginY;
+    baseSize = Math.floor(winW * ASPECT);
+  }
+
+  world.style.top = '0px';
+  world.style.left = '0px';
+  world.style.transformOrigin = `${spiralOriginX}px ${spiralOriginY}px`;
+
+  sections.forEach((sec, i) => {
+    const myRot = Math.floor(90 * i);
+    const myScale = Math.pow(ASPECT, i);
+    sec.style.width = `${baseSize}px`;
+    sec.style.height = `${baseSize}px`;
+    sec.style.transformOrigin = `${sectionOriginX}px ${sectionOriginY}px`;
+    sec.style.transform = `rotate(${myRot}deg) scale(${myScale})`;
+  });
+
+  updateTransform();
+}
+
+/**
+ * ==============================================================================
+ * DYNAMIC LIVE VIDEO COLOR HARMONIZER
+ * Offscreen canvas sampling video frame pixels at runtime, computing HSL,
+ * and harmonizing page background and ambient glow with smooth CSS transitions.
+ * ==============================================================================
+ */
+let liveColorCanvas = null;
+let liveColorCtx = null;
+let liveColorInterval = null;
+
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+  if (max === min) {
+    h = s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+}
+
+function hslToRgbHex(h, s, l) {
+  h /= 360; s /= 100; l /= 100;
+  let r, g, b;
+  if (s === 0) {
+    r = g = b = l;
+  } else {
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1/6) return p + (q - p) * 6 * t;
+      if (t < 1/2) return q;
+      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      return p;
+    };
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1/3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1/3);
+  }
+  return '#' + [r, g, b].map(x => {
+    const hex = Math.round(Math.max(0, Math.min(255, x * 255))).toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  }).join('').toUpperCase();
+}
+
+function stopLiveColorHarmonizer() {
+  if (liveColorInterval) {
+    clearInterval(liveColorInterval);
+    liveColorInterval = null;
+  }
+}
+
+function startLiveColorHarmonizer(videoEl, secData) {
+  stopLiveColorHarmonizer();
+  if (!videoEl) return;
+
+  if (!liveColorCanvas) {
+    liveColorCanvas = document.createElement('canvas');
+    liveColorCanvas.width = 16;
+    liveColorCanvas.height = 9;
+    liveColorCtx = liveColorCanvas.getContext('2d', { willReadFrequently: true });
+  }
+
+  function sampleFrame() {
+    if (!videoEl || videoEl.paused || videoEl.ended || videoEl.readyState < 2) return;
+    try {
+      liveColorCtx.drawImage(videoEl, 0, 0, 16, 9);
+      const imgData = liveColorCtx.getImageData(0, 0, 16, 9).data;
+      let r = 0, g = 0, b = 0, count = 0;
+      for (let i = 0; i < imgData.length; i += 4) {
+        if (imgData[i + 3] > 128) {
+          r += imgData[i];
+          g += imgData[i + 1];
+          b += imgData[i + 2];
+          count++;
+        }
+      }
+      if (count === 0) return;
+      r = Math.round(r / count);
+      g = Math.round(g / count);
+      b = Math.round(b / count);
+
+      const hsl = rgbToHsl(r, g, b);
+      // High lightness for editorial legibility, subtly tinted with the video's live hue
+      const liveBg = hslToRgbHex(hsl.h, Math.max(14, Math.min(32, hsl.s)), 96.2);
+      const glow = `hsla(${hsl.h}, ${Math.max(35, hsl.s)}%, 40%, 0.18)`;
+      const spread = `hsla(${hsl.h}, ${Math.max(35, hsl.s)}%, 30%, 0.06)`;
+
+      document.documentElement.style.setProperty('--theme-bg', liveBg);
+      document.documentElement.style.setProperty('--ambient-video-glow', glow);
+      document.documentElement.style.setProperty('--ambient-video-spread', spread);
+      document.body.style.backgroundColor = liveBg;
+
+      const activeSecEl = sections[currentSection];
+      if (activeSecEl) {
+        activeSecEl.style.backgroundColor = liveBg;
+      }
+    } catch (e) {
+      // Graceful fallback to calibrated preset palette on security sandbox or CORS restriction
+    }
+  }
+
+  liveColorInterval = setInterval(sampleFrame, 350);
+  videoEl.addEventListener('play', sampleFrame, { once: false });
+  videoEl.addEventListener('timeupdate', sampleFrame, { once: false });
+}
+
+let lastActiveIdx = -1;
+
+function updateActiveSection(activeIdx) {
+  if (activeIdx === lastActiveIdx) return;
+  lastActiveIdx = activeIdx;
+  currentSection = activeIdx;
+
+  stopLiveColorHarmonizer();
+
+  const secData = SECTIONS_DATA[activeIdx];
+  if (secData) {
+    document.documentElement.style.setProperty('--theme-bg', secData.bg);
+    document.documentElement.style.setProperty('--theme-fg', secData.fg);
+    document.documentElement.style.setProperty('--theme-accent', secData.accent || secData.fg);
+    document.body.style.backgroundColor = secData.bg;
+    document.body.style.color = secData.fg;
+  }
+
+  // Update counters
+  const curStr = String(activeIdx + 1).padStart(2, '0');
+  const totStr = String(SECTION_COUNT).padStart(2, '0');
+  ctEl.textContent = `${curStr} / ${totStr}`;
+  currentNumEl.textContent = activeIdx + 1;
+  const totalNumEl = document.querySelector('.js-total');
+  if (totalNumEl) totalNumEl.textContent = totStr;
+
+  // Show / hide floating #book-project-cta on slides 8 and 9 (09 / 10 and 10 / 10)
+  const bookCta = document.getElementById('book-project-cta');
+  if (bookCta) {
+    if (activeIdx >= SECTION_COUNT - 2) {
+      bookCta.style.display = 'block';
+      requestAnimationFrame(() => {
+        bookCta.style.opacity = '1';
+        bookCta.style.pointerEvents = 'auto';
+      });
+    } else {
+      bookCta.style.opacity = '0';
+      bookCta.style.pointerEvents = 'none';
+      setTimeout(() => {
+        if (currentSection < SECTION_COUNT - 2) {
+          bookCta.style.display = 'none';
+        }
+      }, 300);
+    }
+  }
+
+  // Active classes, immediate in-view video autoplay & pause for inactive slides
+  sections.forEach((sec, idx) => {
+    const inlineVid = sec.querySelector('.sec-inline-video');
+    if (idx - activeIdx < -1) {
+      sec.style.display = 'none';
+    } else {
+      sec.style.display = 'block';
+    }
+    if (idx === activeIdx) {
+      sec.classList.add('active');
+      if (inlineVid) {
+        inlineVid.muted = isGlobalMuted;
+        inlineVid.play().catch(() => {});
+        startLiveColorHarmonizer(inlineVid, secData);
+      }
+    } else {
+      sec.classList.remove('active');
+      if (inlineVid && !inlineVid.paused) {
+        inlineVid.pause();
+      }
+    }
+  });
+
+  dots.forEach((dot, idx) => {
+    if (idx === activeIdx) dot.classList.add('active');
+    else dot.classList.remove('active');
+  });
+
+  jumpBtns.forEach((btn, idx) => {
+    if (idx === activeIdx) btn.setAttribute('aria-current', 'true');
+    else btn.removeAttribute('aria-current');
+  });
+}
+
+function updateTransform() {
+  const scale = Math.pow(ASPECT, rotation / 90);
+  world.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+
+  const activeIdx = Math.min(SECTION_COUNT - 1, Math.max(0, Math.round(rotation / -90)));
+  updateActiveSection(activeIdx);
+}
+
+/**
+ * Dynamic Motion Blur & Smooth Easing Transition to Target Angle
+ */
+let isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function applyMotionBlur(instantDiff) {
+  if (isReducedMotion) {
+    world.style.filter = 'none';
+    return;
+  }
+  const speed = Math.abs(instantDiff);
+  const blur = Math.min(4.5, speed * 0.22);
+  if (blur > 0.12) {
+    world.style.filter = `blur(${blur.toFixed(1)}px)`;
+  } else {
+    world.style.filter = 'none';
+  }
+}
+
+function animateToRotation(targetR, customDuration) {
+  cancelAnimationFrame(animRAF);
+  const startR = rotation;
+  const deltaR = targetR - startR;
+  if (Math.abs(deltaR) < 0.05) {
+    rotation = targetR;
+    applyMotionBlur(0);
+    updateTransform();
+    return;
+  }
+  const duration = customDuration || Math.min(360, 240 + Math.abs(deltaR) * 0.12);
+  const startTime = performance.now();
+  let lastR = startR;
+
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(1, elapsed / duration);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    rotation = startR + deltaR * ease;
+    const instantDiff = rotation - lastR;
+    lastR = rotation;
+    applyMotionBlur(instantDiff);
+    updateTransform();
+
+    if (progress < 1) {
+      animRAF = requestAnimationFrame(step);
+    } else {
+      rotation = targetR;
+      applyMotionBlur(0);
+      updateTransform();
+    }
+  }
+  animRAF = requestAnimationFrame(step);
+}
+
+function navigateTo(index) {
+  currentSection = Math.max(0, Math.min(SECTION_COUNT - 1, index));
+  targetRotation = currentSection * -90;
+  animateToRotation(targetRotation);
+}
+
+function navigateDelta(direction) {
+  navigateTo(currentSection + direction);
+}
+
+/**
+ * ==============================================================================
+ * WHEEL, TOUCH, GESTURE, AND KEYBOARD EVENT HANDLERS
+ * Strict single-gesture latch prevents multi-skip glitches
+ * ==============================================================================
+ */
+let isWheelLocked = false;
+let wheelUnlockTimer = null;
+
+window.addEventListener('wheel', (e) => {
+  if (introOn) {
+    endIntro();
+    return;
+  }
+  if (document.body.classList.contains('is-modal-open')) return;
+  e.preventDefault();
+
+  // Trailing-edge silence reset: as long as wheel events stream in, keep locked
+  clearTimeout(wheelUnlockTimer);
+  wheelUnlockTimer = setTimeout(() => {
+    isWheelLocked = false;
+  }, 450);
+
+  // If already locked within this gesture, prevent multi-skipping
+  if (isWheelLocked) return;
+
+  if (Math.abs(e.deltaY) > 15 || Math.abs(e.deltaX) > 15) {
+    isWheelLocked = true;
+    if (e.deltaY > 15 || e.deltaX > 15) {
+      navigateDelta(1);
+    } else {
+      navigateDelta(-1);
+    }
+  }
+}, { passive: false });
+
+// Touch / Swipe Navigation
+let touchStartX = 0;
+let touchStartY = 0;
+
+window.addEventListener('touchstart', (e) => {
+  const touch = e.touches[0];
+  touchStartX = touch.pageX;
+  touchStartY = touch.pageY;
+}, { passive: true });
+
+window.addEventListener('touchend', (e) => {
+  if (document.body.classList.contains('is-modal-open')) return;
+  const touch = e.changedTouches[0];
+  const dx = touch.pageX - touchStartX;
+  const dy = touch.pageY - touchStartY;
+
+  if (Math.abs(dy) > 40 || Math.abs(dx) > 40) {
+    if (dy < -40 || dx < -40) {
+      navigateDelta(1);
+    } else {
+      navigateDelta(-1);
+    }
+  }
+}, { passive: true });
+
+// Keyboard Navigation
+window.addEventListener('keydown', (e) => {
+  if (introOn) {
+    endIntro();
+    return;
+  }
+  if (document.body.classList.contains('is-modal-open')) {
+    if (e.key === 'Escape') closeVideoModal();
+    return;
+  }
+
+  switch (e.key) {
+    case 'ArrowDown':
+    case 'ArrowRight':
+    case ' ':
+      e.preventDefault();
+      navigateDelta(1);
+      break;
+    case 'ArrowUp':
+    case 'ArrowLeft':
+      e.preventDefault();
+      navigateDelta(-1);
+      break;
+    case 'Home':
+      e.preventDefault();
+      navigateTo(0);
+      break;
+    case 'End':
+      e.preventDefault();
+      navigateTo(SECTION_COUNT - 1);
+      break;
+  }
+});
+
+// HUD Control Buttons
+document.getElementById('nx').addEventListener('click', () => navigateDelta(1));
+document.getElementById('pr').addEventListener('click', () => navigateDelta(-1));
+document.getElementById('st').addEventListener('click', () => navigateTo(0));
+document.getElementById('pl').addEventListener('click', () => openVideoModal(currentSection));
+document.getElementById('mute-btn')?.addEventListener('click', toggleGlobalAudio);
+
+/* ==============================================================================
+   OPENING ANIMATION: The golden spiral draws itself in red (#f01c1c), then zooms out
+   ============================================================================== */
+const PHI_INTRO = (1 + Math.sqrt(5)) / 2;
+function buildIntroSpiral(n) {
+  let r = { x: 0, y: 0, w: PHI_INTRO * 1000, h: 1000 };
+  const sq = [], R = [];
+  for (let i = 0; i < n + 5; i++) {
+    R.push({ ...r });
+    const s = Math.min(r.w, r.h), d = i % 4;
+    if (d === 0) { sq.push({ x: r.x, y: r.y, s }); r.x += s; r.w -= s; }
+    else if (d === 1) { sq.push({ x: r.x, y: r.y, s }); r.y += s; r.h -= s; }
+    else if (d === 2) { sq.push({ x: r.x + r.w - s, y: r.y, s }); r.w -= s; }
+    else { sq.push({ x: r.x, y: r.y + r.h - s, s }); r.h -= s; }
+  }
+  const k = R[4].w / R[0].w;
+  const pole = { x: (R[4].x - k * R[0].x) / (1 - k), y: (R[4].y - k * R[0].y) / (1 - k) };
+  const arcs = [];
+  let prev = null;
+  sq.slice(0, n).forEach((q, i) => {
+    const s = q.s;
+    const K = [[q.x, q.y], [q.x + s, q.y], [q.x, q.y + s], [q.x + s, q.y + s]];
+    const ad = (a, b) => Math.abs(Math.hypot(a[0] - b[0], a[1] - b[1]) - s) < 0.5 &&
+      (Math.abs(a[0] - b[0]) < 0.5 || Math.abs(a[1] - b[1]) < 0.5);
+    let c, st, en;
+    if (i === 0) { c = K[3]; st = K[2]; en = K[1]; }
+    else {
+      st = prev;
+      c = K.filter(k => ad(k, st)).sort((a, b) => Math.hypot(a[0] - pole.x, a[1] - pole.y) - Math.hypot(b[0] - pole.x, b[1] - pole.y))[0] || K[3];
+      en = K.find(k => ad(k, c) && (Math.abs(k[0] - st[0]) > 0.5 || Math.abs(k[1] - st[1]) > 0.5)) || K[1];
+    }
+    prev = en;
+    arcs.push({ c, st, en });
+  });
+  return { sq: sq.slice(0, n), pole, arcs };
+}
+
+const intro = document.getElementById('intro');
+let introOn = !isReducedMotion;
+
+function endIntro() {
+  if (!introOn || !intro) return;
+  introOn = false;
+  intro.classList.add('out');
+  intro.classList.add('dismissed');
+  setTimeout(() => {
+    if (intro && intro.parentNode) intro.remove();
+  }, 1200);
+}
+
+if (introOn && intro) {
+  const G_intro = buildIntroSpiral(8);
+  const sw = (d, t, w) => `<path class="dr" pathLength="1" style="--d:${t}s" stroke-width="${w}" d="${d}"/>`;
+  let h = '';
+  G_intro.sq.forEach((q, i) => {
+    const a = G_intro.arcs[i];
+    const t = (i * 0.28).toFixed(2);
+    h += sw(`M${q.x} ${q.y}h${q.s}v${q.s}h${-q.s}z`, t, 4) +
+         sw(`M${a.st[0]} ${a.st[1]}A${q.s} ${q.s} 0 0 1 ${a.en[0]} ${a.en[1]}`, (+t + 0.2).toFixed(2), 7);
+  });
+  intro.insertAdjacentHTML('afterbegin', `<svg viewBox="0 0 1618 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${h}</svg>`);
+  intro.addEventListener('click', endIntro);
+  intro.addEventListener('wheel', endIntro, { passive: true });
+  setTimeout(endIntro, 3900);
+} else if (intro) {
+  intro.remove();
+}
+
+// Window Resize
+window.addEventListener('resize', buildSpiral);
+
+/**
+ * Interactive Eye Pupil Cursor Tracking (.js-eye-retina)
+ */
+window.addEventListener('mousemove', (e) => {
+  const activeSec = document.querySelector('.js-section.active');
+  if (!activeSec) return;
+  const retina = activeSec.querySelector('.js-eye-retina');
+  const pupil = activeSec.querySelector('.js-eye-pupil');
+  const highlight = activeSec.querySelector('.js-eye-highlight');
+  if (retina) {
+    const rect = retina.getBoundingClientRect();
+    const rx = rect.left + rect.width / 2;
+    const ry = rect.top + rect.height / 2;
+    const dx = Math.max(-5, Math.min(5, (e.clientX - rx) * 0.08));
+    const dy = Math.max(-5, Math.min(5, (e.clientY - ry) * 0.08));
+    retina.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+    if (pupil) pupil.style.transform = `translate3d(${dx * 1.25}px, ${dy * 1.25}px, 0)`;
+    if (highlight) highlight.style.transform = `translate3d(${dx * 0.4}px, ${dy * 0.4}px, 0)`;
+  }
+});
+
+// Clicking any section directly navigates to it
+sections.forEach((sec, idx) => {
+  sec.addEventListener('click', (e) => {
+    if (e.target.closest('.js-play-trigger') || e.target.closest('.js-project-cta') || e.target.closest('a')) return;
+    if (idx !== currentSection) {
+      navigateTo(idx);
+    }
+  });
+});
+
+// Click handlers for CTA, video frame, and "Watch Film ↗" triggers
+document.addEventListener('click', (e) => {
+  const audioToggle = e.target.closest('.js-audio-toggle');
+  if (audioToggle) {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleGlobalAudio();
+    return;
+  }
+
+  // Copy Email Address Button
+  const copyBtn = e.target.closest('.js-copy-email');
+  if (copyBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    const email = 'gogutroon@gmail.com';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).catch(() => {});
+    }
+    const toast = document.getElementById('portfolio-toast');
+    if (toast) {
+      toast.textContent = `✓ Copied ${email} to clipboard!`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2600);
+    }
+    return;
+  }
+
+  // Vintage PLAY reel Monitor Trigger
+  const reelTrigger = e.target.closest('.js-play-reel-trigger');
+  if (reelTrigger) {
+    e.preventDefault();
+    e.stopPropagation();
+    openVideoModal(8);
+    return;
+  }
+
+  // NLE Timeline Play/Pause Toggle
+  const timelinePlay = e.target.closest('.js-toggle-timeline-play');
+  if (timelinePlay) {
+    e.preventDefault();
+    e.stopPropagation();
+    const isPlaying = timelinePlay.textContent.trim() === '⏸';
+    timelinePlay.textContent = isPlaying ? '▶' : '⏸';
+    const waveBars = document.querySelector('.waveform-bars');
+    if (waveBars) {
+      waveBars.style.animationPlayState = isPlaying ? 'paused' : 'running';
+    }
+    return;
+  }
+
+  const trigger = e.target.closest('.js-play-trigger') || e.target.closest('.js-project-cta') || e.target.closest('.js-play-flat');
+  if (trigger) {
+    e.preventDefault();
+    e.stopPropagation();
+    const idx = trigger.dataset.index !== undefined ? parseInt(trigger.dataset.index, 10) : currentSection;
+    openVideoModal(idx);
+  }
+});
+
+/**
+ * ==============================================================================
+ * CINEMA VIDEO SHOWCASE MODAL
+ * ==============================================================================
+ */
+const dialog = document.getElementById('v');
+const vid = document.getElementById('vid');
+const vt = document.getElementById('vt');
+const vm = document.getElementById('vm');
+const vd = document.getElementById('vd');
+const vspecs = document.getElementById('vspecs');
+const vx = document.getElementById('vx');
+const verr = document.getElementById('verr');
+
+let previousFocusedEl = null;
+
+function openVideoModal(index) {
+  const sec = SECTIONS_DATA[index];
+  if (!sec) return;
+
+  // Pause active inline video while cinema modal is open
+  const activeSec = sections[currentSection];
+  if (activeSec) {
+    const inlineVid = activeSec.querySelector('.sec-inline-video');
+    if (inlineVid && !inlineVid.paused) {
+      inlineVid.pause();
+    }
+  }
+
+  previousFocusedEl = document.activeElement;
+  document.body.classList.add('is-modal-open');
+
+  vt.textContent = sec.modalTitle || sec.title;
+  vm.textContent = `${sec.category || 'Cinematic Film'} · ${sec.year || '2026'} · ${sec.tools || 'DaVinci Resolve'}`;
+  vd.innerHTML = sec.desc;
+  vspecs.innerHTML = `
+    <strong>Format &amp; Master</strong>
+    Aspect Ratio: ${sec.aspect || '16:9 DCI 4K'}<br>
+    Runtime: ${sec.duration || '00:30'}<br>
+    Color Space: Rec.709 / ACEScct<br>
+    Role: ${sec.role || 'Lead Editor &amp; Colorist'}
+  `;
+
+  verr.hidden = true;
+  verr.textContent = '';
+
+  vid.pause();
+  vid.src = sec.video || 'videos/1st.mov';
+  vid.poster = sec.poster || '';
+  vid.currentTime = 0;
+  vid.muted = false;
+  vid.controls = true;
+
+  dialog.showModal();
+
+  startLiveColorHarmonizer(vid, sec);
+
+  const playPromise = vid.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      vid.muted = true;
+      vid.play().catch(() => {});
+    });
+  }
+}
+
+function closeVideoModal() {
+  stopLiveColorHarmonizer();
+  vid.pause();
+  vid.src = '';
+  dialog.close();
+  document.body.classList.remove('is-modal-open');
+
+  // Resume active inline video & color harmonizer
+  const activeSec = sections[currentSection];
+  if (activeSec) {
+    const inlineVid = activeSec.querySelector('.sec-inline-video');
+    if (inlineVid) {
+      inlineVid.muted = isGlobalMuted;
+      inlineVid.play().catch(() => {});
+      startLiveColorHarmonizer(inlineVid, SECTIONS_DATA[currentSection]);
+    }
+  }
+
+  if (previousFocusedEl && typeof previousFocusedEl.focus === 'function') {
+    previousFocusedEl.focus();
+  }
+}
+
+vx.addEventListener('click', closeVideoModal);
+dialog.addEventListener('click', (e) => {
+  if (e.target === dialog) closeVideoModal();
+});
+
+/**
+ * ==============================================================================
+ * REAL-TIME CANVAS GENERATIVE MOIRÉ SPHERES (Thin Black Lines on Light Canvas)
+ * ==============================================================================
+ */
+const bgCanvas = document.getElementById('canvas');
+const bgCtx = bgCanvas.getContext('2d');
+
+function sizeBgCanvas() {
+  bgCanvas.width = window.innerWidth;
+  bgCanvas.height = window.innerHeight;
+}
+window.addEventListener('resize', sizeBgCanvas);
+sizeBgCanvas();
+
+let bgFrame = 0;
+function drawMoiré() {
+  bgFrame++;
+  bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+  const cx = spiralOriginX;
+  const cy = spiralOriginY;
+  const radius = Math.min(winW, winH) * 0.42;
+
+  bgCtx.save();
+  bgCtx.translate(cx, cy);
+  bgCtx.rotate((rotation * 0.008) + (bgFrame * 0.0015));
+  bgCtx.strokeStyle = 'rgba(0, 0, 0, 0.04)';
+  bgCtx.lineWidth = 0.75;
+
+  for (let r = 20; r < radius; r += 26) {
+    bgCtx.beginPath();
+    bgCtx.arc(0, 0, r, 0, Math.PI * 1.5);
+    bgCtx.stroke();
+  }
+  bgCtx.restore();
+
+  requestAnimationFrame(drawMoiré);
+}
+drawMoiré();
+
+/**
+ * ==============================================================================
+ * ACCESSIBLE REDUCED MOTION PREFERENCE HANDLING
+ * ==============================================================================
+ */
+function handleReducedMotion(e) {
+  if (e.matches) {
+    document.body.classList.add('reduced');
+    if (intro) intro.classList.add('dismissed');
+  } else {
+    document.body.classList.remove('reduced');
+  }
+}
+const motionMediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+motionMediaQuery.addEventListener('change', handleReducedMotion);
+handleReducedMotion(motionMediaQuery);
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.js-skip-motion')) {
+    e.preventDefault();
+    document.body.classList.toggle('reduced');
+  }
+});
+
+// Initialize on Load
+buildSpiral();
+</script>
+
+</body>
+</html>
