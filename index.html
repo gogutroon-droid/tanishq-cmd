@@ -3806,6 +3806,7 @@ function buildIntroSpiral(n) {
   return { sq: sq.slice(0, n), pole, arcs };
 }
 
+const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const intro = document.getElementById('intro');
 let introOn = !isReducedMotion;
 
@@ -3830,9 +3831,11 @@ if (introOn && intro) {
          sw(`M${a.st[0]} ${a.st[1]}A${q.s} ${q.s} 0 0 1 ${a.en[0]} ${a.en[1]}`, (+t + 0.12).toFixed(2), 7);
   });
   intro.insertAdjacentHTML('afterbegin', `<svg viewBox="0 0 1618 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${h}</svg>`);
+  intro.addEventListener('pointerdown', endIntro);
   intro.addEventListener('click', endIntro);
   intro.addEventListener('wheel', endIntro, { passive: true });
-  setTimeout(endIntro, 2000);
+  intro.addEventListener('touchstart', endIntro, { passive: true });
+  setTimeout(endIntro, 1800);
 } else if (intro) {
   intro.remove();
 }
